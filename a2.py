@@ -4,7 +4,7 @@ from search import *
 import random as r
 import time
 
-goal_state=(1,2,3,4,5,6,7,8,0)
+goal_state=(0,1,2,3,4,5,6,7,8)
 def make_rand_8puzzle():
     while True:
         temp = tuple(random.sample((0,1,2,3,4,5,6,7,8), 9))
@@ -36,7 +36,7 @@ def misplaced(node):
 ###taken from textbook
 def manhattan(node):
     state = node.state
-    index_goal = {0:[2,2], 1:[0,0], 2:[0,1], 3:[0,2], 4:[1,0], 5:[1,1], 6:[1,2], 7:[2,0], 8:[2,1]}
+    index_goal = {0:[0,0], 1:[0,1], 2:[0,2], 3:[1,0], 4:[1,1], 5:[1,2], 6:[2,0], 7:[2,1], 8:[2,2]}
     index_state = {}
     index = [[0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]]
     x, y = 0, 0
@@ -103,11 +103,11 @@ def astar_search(problem, h=None, display=True):
 
 ############################################# driver code
 
-# puzzle=make_rand_8puzzle()
+puzzle=make_rand_8puzzle()
 
-puzzle=EightPuzzle((8,5,3,6,1,2,4,7,0))
 
-###misplaced-tiles
+
+##misplaced-tiles
 print("A* with misplaced-tiles heuristic:")
 start_time = time.time()
 
@@ -122,6 +122,7 @@ print(f'elapsed time (in seconds): {elapsed_time}s')
 print("\n\nA* with manhattan heuristic:")
 start_time = time.time()
 
+print(astar_search(puzzle,manhattan,True).state)
 sol=astar_search(puzzle,manhattan,True).solution()
 print("Solution: ",sol)
 print("Solution length: ",len(sol))
