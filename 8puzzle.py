@@ -145,16 +145,16 @@ def astar_search(problem, h=None, display=True):
 
 puzzle = make_rand_8puzzle()
 
-##misplaced-tiles
-print("A* with misplaced-tiles heuristic:")
-start_time = time.time()
+# ##misplaced-tiles
+# print("A* with misplaced-tiles heuristic:")
+# start_time = time.time()
 
-sol = astar_search(puzzle, "", True).solution()
-print("Solution: ", sol)
-print("Solution length: ", len(sol))
+# sol = astar_search(puzzle, "", True).solution()
+# print("Solution: ", sol)
+# print("Solution length: ", len(sol))
 
-elapsed_time = time.time() - start_time
-print(f'elapsed time (in seconds): {elapsed_time}s')
+# elapsed_time = time.time() - start_time
+# print(f'elapsed time (in seconds): {elapsed_time}s')
 
 ###manhattan
 print("\n\nA* with manhattan heuristic:")
@@ -179,13 +179,13 @@ print("Solution length: ", len(sol))
 elapsed_time = time.time() - start_time
 print(f'elapsed time (in seconds): {elapsed_time}s')
 
-###Max-misplaced-manhattan
-print("\n\nA* with max-misplaced-manhattan heuristic:")
-start_time = time.time()
+# ###Max-misplaced-manhattan
+# print("\n\nA* with max-misplaced-manhattan heuristic:")
+# start_time = time.time()
 
-sol = astar_search(puzzle, max_heuristic, True).solution()
-print("Solution: ", sol)
-print("Solution length: ", len(sol))
+# sol = astar_search(puzzle, max_heuristic, True).solution()
+# print("Solution: ", sol)
+# print("Solution length: ", len(sol))
 
-elapsed_time = time.time() - start_time
-print(f'elapsed time (in seconds): {elapsed_time}s')
+# elapsed_time = time.time() - start_time
+# print(f'elapsed time (in seconds): {elapsed_time}s')
