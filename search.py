@@ -450,7 +450,7 @@ class EightPuzzle(Problem):
             possible_actions.remove('UP')
         if index_blank_square % 4 == 3:
             possible_actions.remove('RIGHT')
-        if index_blank_square > 4:
+        if index_blank_square > 11:
             possible_actions.remove('DOWN')
 
         return possible_actions
