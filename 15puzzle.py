@@ -4,13 +4,14 @@ import time
 import math
 
 N = 4
-tiles = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
 
 def make_rand_15puzzle():
     found_solvable_puzzle = False
+    new_puzzle = FifteenPuzzle(goal_state)
     while not found_solvable_puzzle:
-        state = tuple(random.sample(tiles, 16))
+        state = tuple(random.sample(goal_state, 16))
         new_puzzle = FifteenPuzzle(state)
         if new_puzzle.check_solvability(new_puzzle.initial):
             found_solvable_puzzle = True
@@ -39,37 +40,26 @@ def display(state):
 
 """
 
+
 ##taken from textbook code
 def misplaced(node):
     return sum(s != g for (s, g) in zip(node.state, goal_state))
 
 
-###taken from textbook
 def manhattan(node):
-    state = node.state
-    index_goal = {}
-    index = []
-    count = 0
-    for i in range(N):
-        for j in range(N):
-            index_goal[count] = [i, j]
-            count += 1
-            index.append([i, j])
-    # index_goal = {0: [0, 0], 1: [0, 1], 2: [0, 2], 3: [1, 0], 4: [1, 1], 5: [1, 2], 6: [2, 0], 7: [2, 1], 8: [2, 2]}
-    index_state = {}
-    # index = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
-    x, y = 0, 0
+    total_distance = 0
+    for tile in node.state:
+        if (tile != 0):
+            tile_goal_column = (tile - 1) % 4
+            tile_current_column = node.state.index(tile) % 4
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
 
-    for i in range(len(state)):
-        index_state[state[i]] = index[i]
-    mhd = 0
+            tile_goal_row = (tile - 1) // 4
+            tile_current_row = node.state.index(tile) // 4
+            vertical_distance = abs(tile_current_row - tile_goal_row)
 
-    # modified to not consider blank tile
-    # for i in range(1, 9):
-    for i in range(1, N * N):
-        for j in range(2):
-            mhd += abs(index_goal[i][j] - index_state[i][j])
-    return mhd
+            total_distance += horizontal_distance + vertical_distance
+    return total_distance
 
 
 def inversion(node):
@@ -123,31 +113,40 @@ def max_heuristic(node):
     return max(mis_score, man_score)
 
 
+""" 
+                                ---------------------------- 
+
+                        ---------------- Main Program ----------------
+
+                                ----------------------------
+
+"""
+
+
 if __name__ == "__main__":
-    # puzzle = make_rand_8puzzle()
     puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
     # puzzle = make_rand_15puzzle()
     display(puzzle.initial)
     print(puzzle.check_solvability(puzzle.initial))
 
     ##misplaced-tiles
-    # print("A* with misplaced-tiles heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, "", True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    print("A* with misplaced-tiles heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, "", True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###manhattan
     print("\n\nA* with manhattan heuristic:")
     start_time = time.time()
 
-    print(astar_search(puzzle,manhattan,True).state)
-    print(new_manhattan(Node(puzzle.initial)))
-    sol = astar_search(puzzle, new_manhattan, True).solution()
+    # print(astar_search(puzzle,manhattan,True).state)
+    # print(manhattan(Node(puzzle.initial)))
+    sol = astar_search(puzzle, manhattan, True).solution()
     print("Solution: ", sol)
     print("Solution length: ", len(sol))
 
@@ -155,23 +154,23 @@ if __name__ == "__main__":
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ## inversion
-    # print("\n\nA* with inversion-distance heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, inversion, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    print("\n\nA* with inversion-distance heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, inversion, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###Max-misplaced-manhattan
-    # print("\n\nA* with max-misplaced-manhattan heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, max_heuristic, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    print("\n\nA* with max-misplaced-manhattan heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, max_heuristic, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
