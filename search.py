@@ -546,6 +546,7 @@ class FifteenPuzzle(Problem):
 
         return state == self.goal
 
+    # Resource: https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
     def check_solvability(self, state):
         """ Checks if the given state is solvable """
 
@@ -555,7 +556,13 @@ class FifteenPuzzle(Problem):
                 if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
                     inversion += 1
 
-        return inversion % 2 == 0
+        index_blank_square = self.find_blank_square(state)
+        row_index = index_blank_square / 4
+
+        if row_index % 2 == 0:
+            return inversion % 2 != 0
+        else:
+            return inversion % 2 == 0
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is 
