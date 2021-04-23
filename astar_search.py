@@ -18,7 +18,9 @@ class Node:
         self.action = action
         self.path_cost = path_cost
         self.depth = 0
+        self.inversions = 0
         if parent:
+            self.inversions = parent.inversions
             self.depth = parent.depth + 1
 
     def __repr__(self):
@@ -26,6 +28,12 @@ class Node:
 
     def __lt__(self, node):
         return self.state < node.state
+
+    def set_inversions(self, val):
+        self.inversions = val
+
+    def get_inversions(self):
+        return self.inversions
 
     def expand(self, problem):
         """List the nodes reachable in one step from this node."""

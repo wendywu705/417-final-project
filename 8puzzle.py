@@ -1,3 +1,4 @@
+from Puzzle import EightPuzzle
 from astar_search import *
 import time
 import math
@@ -36,32 +37,27 @@ def misplaced(node):
     return sum(s != g for (s, g) in zip(node.state, goal_state))
 
 
-###taken from textbook
 def manhattan(node):
-    state = node.state
-    index_goal = {0: [0, 0], 1: [0, 1], 2: [0, 2], 3: [1, 0], 4: [1, 1], 5: [1, 2], 6: [2, 0], 7: [2, 1], 8: [2, 2]}
-    index_state = {}
-    index = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
-    x, y = 0, 0
+    total_distance = 0
+    for tile in node.state:
+        if tile != 0:
+            tile_goal_column = (tile - 1) % 3
+            tile_current_column = node.state.index(tile) % 3
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
 
-    for i in range(len(state)):
-        index_state[state[i]] = index[i]
+            tile_goal_row = (tile - 1) // 3
+            tile_current_row = node.state.index(tile) // 3
+            vertical_distance = abs(tile_current_row - tile_goal_row)
 
-    mhd = 0
-
-    # modified to not consider blank tile
-    for i in range(1, 9):
-        for j in range(2):
-            mhd += abs(index_goal[i][j] - index_state[i][j])
-
-    return mhd
+            total_distance += horizontal_distance + vertical_distance
+    return total_distance
 
 
 def inversion(node):
     initial = node
     v_inv_count = 0
     h_inv_count = 0
-    total_inv_count = 0
+    total_inv_change = 0
     state = node.state
     transpose_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
     transposed_node = []
@@ -71,11 +67,11 @@ def inversion(node):
             transposed_initial.append(initial.parent.state[i])
         transposed_node.append(state[i])
     if initial.parent is None:
-        for i in range(len(state)):
+        for i in range(len(state) - 1):
             for j in range(i + 1, len(state)):
-                if state[j] < state[i] != 0:
+                if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
                     v_inv_count += 1
-                if transposed_node[j] < transposed_node[i] and transposed_node[i]:
+                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
                     h_inv_count += 1
         vertical_lowerbound = math.floor(v_inv_count / 2) + v_inv_count % 2
         horizontal_lowerbound = math.floor(h_inv_count / 2) + h_inv_count % 2
@@ -95,14 +91,14 @@ def inversion(node):
             between_tile2 = transposed_node[smaller + 2]
             if initial.action == 'RIGHT':
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_count = -2
+                    total_inv_change = -2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_count = 2
+                    total_inv_change = 2
             else:
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_count = 2
+                    total_inv_change = 2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_count = -2
+                    total_inv_change = -2
         # vertical
         else:
             smaller = min(prev_blank, new_blank)
@@ -110,16 +106,15 @@ def inversion(node):
             between_tile2 = state[smaller + 2]
             if initial.action == 'UP':
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_count = 2
+                    total_inv_change = 2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_count = -2
+                    total_inv_change = -2
             else:
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_count = -2
+                    total_inv_change = -2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_count = 2
-        # horizontal and vertical moves are mutually exclusive
-        returned_inversions = node.inversions + math.floor(total_inv_count / 2) + total_inv_count % 2
+                    total_inv_change = 2
+        returned_inversions = node.parent.inversions + total_inv_change / 2
         node.set_inversions(returned_inversions)
         return returned_inversions
 
@@ -174,7 +169,9 @@ def astar_search(problem, h=None, display=True):
 ############################################# driver code
 
 # puzzle = make_rand_8puzzle()
-puzzle = EightPuzzle((0, 2, 3, 1, 5, 7, 6, 4, 8))
+# puzzle = EightPuzzle((0, 2, 3, 1, 5, 7, 6, 4, 8))
+# puzzle = EightPuzzle((0, 8, 5, 3, 4, 7, 2, 6, 1))
+puzzle = EightPuzzle((2, 6, 5, 0, 3, 4, 7, 8, 1))
 
 ##misplaced-tiles
 print("A* with misplaced-tiles heuristic:")
