@@ -10,10 +10,7 @@ for i in range(N * N):
 
 def make_rand_8puzzle():
     while True:
-        temp = []
-        for k in range(N * N):
-            temp.append(k)
-        temp = tuple(random.sample(temp, 16))
+        temp = tuple(random.sample(goal_state, 16))
         new_puzzle = EightPuzzle(temp, goal_state)
         if new_puzzle.check_solvability(temp):
             print("State: ")
@@ -21,7 +18,6 @@ def make_rand_8puzzle():
             return new_puzzle
 
 
-# temp = tuple(random.sample((0,1,2,3,4,5,6,7,8), 9))
 def display(state):
     cnt = 0
     for num in state:
@@ -45,7 +41,7 @@ def misplaced(node):
 ###taken from textbook
 def manhattan(node):
     state = node.state
-    # display(state)
+    display(state)
     index_goal = {}
     index = []
     count = 0
@@ -65,10 +61,10 @@ def manhattan(node):
 
     # modified to not consider blank tile
     # for i in range(1, 9):
-    for i in range(1, N):
+    for i in range(1, N*N):
         for j in range(2):
             mhd += abs(index_goal[i][j] - index_state[i][j])
-    # print(mhd)
+    print(mhd)
     return mhd
 
 
