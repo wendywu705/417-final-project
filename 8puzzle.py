@@ -8,7 +8,7 @@ goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
 def make_rand_8puzzle():
     while True:
         temp = tuple(random.sample(goal_state, 16))
-        new_puzzle = EightPuzzle(temp, goal_state)
+        new_puzzle = FifteenPuzzle(temp, goal_state)
         if new_puzzle.check_solvability(temp):
             print("State: ")
             display(temp)
@@ -156,7 +156,7 @@ def astar_search(problem, h=None, display=True):
 ############################################# driver code
 
 # puzzle = make_rand_8puzzle()
-puzzle = EightPuzzle((1, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), goal_state)
+puzzle = FifteenPuzzle((1, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), goal_state)
 display(puzzle.initial)
 
 ##misplaced-tiles
