@@ -499,7 +499,7 @@ class FifteenPuzzle(Problem):
     squares is a blank. A state is represented as a tuple of length 9, where  element at
     index i represents the tile number  at index i (0 if it's an empty square) """
 
-    def __init__(self, initial, goal=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)):
+    def __init__(self, initial, goal=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)):
         """ Define goal state and initialize a problem """
         super().__init__(initial, goal)
 
@@ -557,7 +557,13 @@ class FifteenPuzzle(Problem):
                     inversion += 1
 
         index_blank_square = self.find_blank_square(state)
-        row_index = index_blank_square / 4
+        row_index = index_blank_square // 4
+        print('index_blank_square = ', end='')
+        print(index_blank_square)
+        print('row_index = ', end='')
+        print(row_index)
+        print('inversion = ', end='')
+        print(inversion)
 
         if row_index % 2 == 0:
             return inversion % 2 != 0
