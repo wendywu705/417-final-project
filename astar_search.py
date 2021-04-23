@@ -18,8 +18,12 @@ class Node:
         self.action = action
         self.path_cost = path_cost
         self.depth = 0
+        self.v_invcount = 0
+        self.h_invcount = 0
         self.inversions = 0
         if parent:
+            self.v_invcount = parent.v_invcount
+            self.h_invcount = parent.h_invcount
             self.inversions = parent.inversions
             self.depth = parent.depth + 1
 

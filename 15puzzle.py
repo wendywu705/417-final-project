@@ -64,43 +64,52 @@ def manhattan(node):
 
 def inversion(node):
     initial = node
-    v_inv_count = 0
-    h_inv_count = 0
-    total_inv_count = 0
+    v_invcount = 0
+    h_invcount = 0
     state = node.state
-    print(node.state)
+    # print(node.state)
     transpose_order = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15]
     transposed_node = []
     transposed_initial = []
-    display(state)
-    if initial.parent:
-        print("prev val:", node.parent.inversions)
+    # display(state)
+    # if initial.parent:
+    #     print("prev val:", node.parent.inversions)
     for i in transpose_order:
         if initial.parent:
             transposed_initial.append(initial.parent.state[i])
         transposed_node.append(state[i])
-    print("action:", node.action)
-    # if initial.parent is None:
-    if 1:
-        for i in range(len(state)):
+    # print("action:", node.action)
+    # print("transposed:", transposed_node)
+    if initial.parent is None:
+        # if 1:
+        # print("ONE!")
+        for i in range(len(state) - 1):
             for j in range(i + 1, len(state)):
-                if (state[j] < state[i]) and state[i] != 0:
-                    v_inv_count += 1
-                if (transposed_node[j] < transposed_node[i]) and transposed_node[i] != 0:
-                    h_inv_count += 1
-            print(v_inv_count,h_inv_count)
-        vertical_lowerbound = math.floor(v_inv_count / 3) + v_inv_count % 3
-        horizontal_lowerbound = math.floor(h_inv_count / 3) + h_inv_count % 3
-        returned_inversions = vertical_lowerbound + horizontal_lowerbound
-        node.set_inversions(returned_inversions)
-        print("actual", returned_inversions)
-        # return returned_inversions
-    # else:
-    if node.parent is not None:
+                if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
+                    v_invcount += 1
+                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
+                    h_invcount += 1
+            # print(v_invcount, h_invcount)
+        vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
+        horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
+        if (h_invcount == 0 or v_invcount == 0):
+            returned_inversions = 0
+        else:
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        # if node.parent is None:
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
+        node.inversions = returned_inversions
+        # print("now,h,v:",node.h_invcount, node.v_invcount)
+        # print("actual", returned_inversions)
+        return returned_inversions
+    else:
+        # if node.parent is not None:
+        #     print("TWO")
         prev_blank = initial.parent.state.index(0)
         new_blank = state.index(0)
         moved_tile = state[prev_blank]
-        print("moved tile", moved_tile)
+        # print("moved tile", moved_tile)
         # horizontal
         if initial.action == 'LEFT' or initial.action == 'RIGHT':
             prev_blank = transposed_initial.index(0)
@@ -110,6 +119,8 @@ def inversion(node):
             between_tile2 = transposed_node[smaller + 2]
             between_tile3 = transposed_node[smaller + 3]
             tiles = [between_tile1, between_tile2, between_tile3]
+            # for t in tiles:
+            #     print("tile:", t)
             bigger_tiles = 0
             smaller_tiles = 0
             for tile in tiles:
@@ -119,23 +130,24 @@ def inversion(node):
                     smaller_tiles += 1
             if initial.action == 'RIGHT':
                 if smaller_tiles == 3:
-                    total_inv_count = 3
+                    h_invcount = 3
                 elif bigger_tiles == 3:
-                    total_inv_count = -3
+                    h_invcount = -3
                 elif bigger_tiles == 2 and smaller_tiles == 1:
-                    total_inv_count = -1
+                    h_invcount = -1
                 elif bigger_tiles == 1 and smaller_tiles == 2:
-                    total_inv_count = 1
+                    h_invcount = 1
             else:
                 if smaller_tiles == 3:
-                    total_inv_count = -3
+                    h_invcount = -3
                 elif bigger_tiles == 3:
-                    total_inv_count = 3
+                    h_invcount = 3
                 elif bigger_tiles == 2 and smaller_tiles == 1:
-                    total_inv_count = 1
+                    h_invcount = 1
                 elif bigger_tiles == 1 and smaller_tiles == 2:
-                    total_inv_count = -1
-            print("h_val:", total_inv_count)
+                    h_invcount = -1
+            node.h_invcount += h_invcount
+            # print("h_val:", h_invcount)
         # vertical
         else:
             smaller = min(prev_blank, new_blank)
@@ -143,6 +155,8 @@ def inversion(node):
             between_tile2 = state[smaller + 2]
             between_tile3 = state[smaller + 3]
             tiles = [between_tile1, between_tile2, between_tile3]
+            # for t in tiles:
+            #     print("tile:", t)
             bigger_tiles = 0
             smaller_tiles = 0
             for tile in tiles:
@@ -152,29 +166,41 @@ def inversion(node):
                     smaller_tiles += 1
             if initial.action == 'UP':
                 if smaller_tiles == 3:
-                    total_inv_count = -3
+                    v_invcount = -3
                 elif bigger_tiles == 3:
-                    total_inv_count = 3
+                    v_invcount = 3
                 elif bigger_tiles == 2 and smaller_tiles == 1:
-                    total_inv_count = 1
+                    v_invcount = 1
                 elif bigger_tiles == 1 and smaller_tiles == 2:
-                    total_inv_count = -1
+                    v_invcount = -1
             else:
                 if smaller_tiles == 3:
-                    total_inv_count = 3
+                    v_invcount = 3
                 elif bigger_tiles == 3:
-                    total_inv_count = -3
+                    v_invcount = -3
                 elif bigger_tiles == 2 and smaller_tiles == 1:
-                    total_inv_count = -1
+                    v_invcount = -1
                 elif bigger_tiles == 1 and smaller_tiles == 2:
-                    total_inv_count = 1
-            print("v_val:", total_inv_count)
+                    v_invcount = 1
+            node.v_invcount += v_invcount
+            # print("v_val:", v_invcount)
         # horizontal and vertical moves are mutually exclusive
-        returned_inversions = node.inversions + total_inv_count
-        print("ret val:", returned_inversions)
-        node.set_inversions(returned_inversions)
-        print("-------")
-    return returned_inversions
+        # rem= node.parent.inversions%3
+        # temp= (node.parent.inversions-rem)*3 + rem
+        # new_val= math.floor(temp+total_inv_count)/3 + (temp+total_inv_count)%3
+
+        # print("h,v:",node.h_invcount,node.v_invcount)
+        vertical_lowerbound = math.floor(node.v_invcount / 3) + node.v_invcount % 3
+        horizontal_lowerbound = math.floor(node.h_invcount / 3) + node.h_invcount % 3
+        if (h_invcount == 0 or v_invcount == 0):
+            returned_inversions = 0
+        else:
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        # print("ret...", returned_inversions)
+        node.inversions = returned_inversions
+        return returned_inversions
+    # print("-------")
+    # return returned_inversions
 
 
 ##taken from textbook code
@@ -196,6 +222,7 @@ def max_heuristic(node):
 
 if __name__ == "__main__":
     puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
+    # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
     # puzzle = make_rand_15puzzle()
     display(puzzle.initial)
     print('solvability = ', puzzle.check_solvability(puzzle.initial))

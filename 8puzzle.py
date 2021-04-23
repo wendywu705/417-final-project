@@ -3,7 +3,7 @@ from astar_search import *
 import time
 import math
 
-goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
+goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9)
 
 
 def make_rand_8puzzle():
@@ -38,7 +38,7 @@ def misplaced(node):
 
 
 def manhattan(node):
-    goal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 8]
+    goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     mhd = 0
     for i in range(1, 9):
         a = node.state.index(i)
@@ -162,7 +162,9 @@ def astar_search(problem, h=None, display=True):
 
 ############################################# driver code
 
-puzzle = make_rand_8puzzle()
+# puzzle = make_rand_8puzzle()
+puzzle = EightPuzzle((1, 2, 3, 4, 5, 6, 7, 0, 8))
+display(puzzle.initial)
 # puzzle = EightPuzzle((0, 2, 3, 1, 5, 7, 6, 4, 8))
 # puzzle = EightPuzzle((0, 8, 5, 3, 4, 7, 2, 6, 1))
 # puzzle = EightPuzzle((2, 6, 5, 0, 3, 4, 7, 8, 1))
