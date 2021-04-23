@@ -205,12 +205,9 @@ class FifteenPuzzle(Puzzle):
 
         index_blank_square = self.find_blank_square(state)
         row_index = index_blank_square // 4
-        print('index_blank_square = ', end='')
-        print(index_blank_square)
-        print('row_index = ', end='')
-        print(row_index)
-        print('inversion = ', end='')
-        print(inversion)
+        print('index_blank_square = ', index_blank_square)
+        print('row_index = ', row_index)
+        print('inversion = ', inversion)
 
         if row_index % 2 == 0:
             return inversion % 2 != 0

@@ -127,7 +127,8 @@ if __name__ == "__main__":
     puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
     # puzzle = make_rand_15puzzle()
     display(puzzle.initial)
-    print(puzzle.check_solvability(puzzle.initial))
+    print('solvability = ', puzzle.check_solvability(puzzle.initial))
+    print()
 
     ##misplaced-tiles
     print("A* with misplaced-tiles heuristic:")
