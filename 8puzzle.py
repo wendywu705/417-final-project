@@ -1,4 +1,4 @@
-from search import *
+from astar_search import *
 import time
 import math
 
