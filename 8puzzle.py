@@ -3,10 +3,7 @@ import time
 import math
 
 N = 4
-goal_state = []
-for i in range(N * N):
-    goal_state.append(i)
-
+goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
 
 def make_rand_8puzzle():
     while True:
@@ -41,7 +38,6 @@ def misplaced(node):
 ###taken from textbook
 def manhattan(node):
     state = node.state
-    display(state)
     index_goal = {}
     index = []
     count = 0
@@ -61,10 +57,9 @@ def manhattan(node):
 
     # modified to not consider blank tile
     # for i in range(1, 9):
-    for i in range(1, N*N):
+    for i in range(1, N * N):
         for j in range(2):
             mhd += abs(index_goal[i][j] - index_state[i][j])
-    print(mhd)
     return mhd
 
 
@@ -88,9 +83,7 @@ def inversion(node):
     prev = 1
     for i in range(N):
         for j in range(i, N * N, N):
-            print(j)
             new_order.append(j)
-    print(new_order)
 
     new_node = []
     for i in new_order:
@@ -167,15 +160,15 @@ puzzle = EightPuzzle((1, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), goa
 display(puzzle.initial)
 
 ##misplaced-tiles
-# print("A* with misplaced-tiles heuristic:")
-# start_time = time.time()
-#
-# sol = astar_search(puzzle, "", True).solution()
-# print("Solution: ", sol)
-# print("Solution length: ", len(sol))
-#
-# elapsed_time = time.time() - start_time
-# print(f'elapsed time (in seconds): {elapsed_time}s')
+print("A* with misplaced-tiles heuristic:")
+start_time = time.time()
+
+sol = astar_search(puzzle, "", True).solution()
+print("Solution: ", sol)
+print("Solution length: ", len(sol))
+
+elapsed_time = time.time() - start_time
+print(f'elapsed time (in seconds): {elapsed_time}s')
 
 ###manhattan
 print("\n\nA* with manhattan heuristic:")
