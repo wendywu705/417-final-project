@@ -38,19 +38,13 @@ def misplaced(node):
 
 
 def manhattan(node):
-    total_distance = 0
-    for tile in node.state:
-        if tile != 0:
-            tile_goal_column = (tile - 1) % 3
-            tile_current_column = node.state.index(tile) % 3
-            horizontal_distance = abs(tile_current_column - tile_goal_column)
-
-            tile_goal_row = (tile - 1) // 3
-            tile_current_row = node.state.index(tile) // 3
-            vertical_distance = abs(tile_current_row - tile_goal_row)
-
-            total_distance += horizontal_distance + vertical_distance
-    return total_distance
+    goal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 8]
+    mhd = 0
+    for i in range(1, 9):
+        a = node.state.index(i)
+        b = goal.index(i)
+        mhd += (abs(a % 3 - b % 3) + abs(a // 3 - b // 3))
+    return mhd
 
 
 def inversion(node):
@@ -168,10 +162,10 @@ def astar_search(problem, h=None, display=True):
 
 ############################################# driver code
 
-# puzzle = make_rand_8puzzle()
+puzzle = make_rand_8puzzle()
 # puzzle = EightPuzzle((0, 2, 3, 1, 5, 7, 6, 4, 8))
 # puzzle = EightPuzzle((0, 8, 5, 3, 4, 7, 2, 6, 1))
-puzzle = EightPuzzle((2, 6, 5, 0, 3, 4, 7, 8, 1))
+# puzzle = EightPuzzle((2, 6, 5, 0, 3, 4, 7, 8, 1))
 
 ##misplaced-tiles
 print("A* with misplaced-tiles heuristic:")
