@@ -92,14 +92,13 @@ def inversion(node):
             # print(v_invcount, h_invcount)
         vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
         horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
-        if (h_invcount == 0 or v_invcount == 0):
+        if v_invcount == 0:
             returned_inversions = 0
         else:
             returned_inversions = vertical_lowerbound + horizontal_lowerbound
         # if node.parent is None:
         node.h_invcount = h_invcount
         node.v_invcount = v_invcount
-        node.inversions = returned_inversions
         # print("now,h,v:",node.h_invcount, node.v_invcount)
         # print("actual", returned_inversions)
         return returned_inversions
@@ -192,12 +191,11 @@ def inversion(node):
         # print("h,v:",node.h_invcount,node.v_invcount)
         vertical_lowerbound = math.floor(node.v_invcount / 3) + node.v_invcount % 3
         horizontal_lowerbound = math.floor(node.h_invcount / 3) + node.h_invcount % 3
-        if (h_invcount == 0 or v_invcount == 0):
+        if v_invcount == 0:
             returned_inversions = 0
         else:
             returned_inversions = vertical_lowerbound + horizontal_lowerbound
         # print("ret...", returned_inversions)
-        node.inversions = returned_inversions
         return returned_inversions
     # print("-------")
     # return returned_inversions

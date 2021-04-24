@@ -3,7 +3,7 @@ from astar_search import *
 import time
 import math
 
-goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 
 def make_rand_8puzzle():
@@ -49,9 +49,8 @@ def manhattan(node):
 
 def inversion(node):
     initial = node
-    v_inv_count = 0
-    h_inv_count = 0
-    total_inv_change = 0
+    v_invcount = 0
+    h_invcount = 0
     state = node.state
     transpose_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
     transposed_node = []
@@ -64,13 +63,18 @@ def inversion(node):
         for i in range(len(state) - 1):
             for j in range(i + 1, len(state)):
                 if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
-                    v_inv_count += 1
+                    v_invcount += 1
                 if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
-                    h_inv_count += 1
-        vertical_lowerbound = math.floor(v_inv_count / 2) + v_inv_count % 2
-        horizontal_lowerbound = math.floor(h_inv_count / 2) + h_inv_count % 2
+                    h_invcount += 1
+        vertical_lowerbound = math.floor(v_invcount / 2) + v_invcount % 2
+        horizontal_lowerbound = math.floor(h_invcount / 2) + h_invcount % 2
         returned_inversions = vertical_lowerbound + horizontal_lowerbound
-        node.set_inversions(returned_inversions)
+        if v_invcount == 0:
+            returned_inversions = 0
+        else:
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
         return returned_inversions
     else:
         prev_blank = initial.parent.state.index(0)
@@ -85,14 +89,15 @@ def inversion(node):
             between_tile2 = transposed_node[smaller + 2]
             if initial.action == 'RIGHT':
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_change = -2
+                    h_invcount = -2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_change = 2
+                    h_invcount = 2
             else:
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_change = 2
+                    h_invcount = 2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_change = -2
+                    h_invcount = -2
+            node.h_invcount+= h_invcount
         # vertical
         else:
             smaller = min(prev_blank, new_blank)
@@ -100,16 +105,21 @@ def inversion(node):
             between_tile2 = state[smaller + 2]
             if initial.action == 'UP':
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_change = 2
+                    v_invcount = 2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_change = -2
+                    v_invcount = -2
             else:
                 if between_tile1 > moved_tile and between_tile2 > moved_tile:
-                    total_inv_change = -2
+                    v_invcount = -2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
-                    total_inv_change = 2
-        returned_inversions = node.parent.inversions + total_inv_change / 2
-        node.set_inversions(returned_inversions)
+                    v_invcount = 2
+            node.v_invcount+=v_invcount
+        vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
+        horizontal_lowerbound = math.floor(node.h_invcount / 2) + node.h_invcount % 2
+        if v_invcount == 0:
+            returned_inversions = 0
+        else:
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
         return returned_inversions
 
 
@@ -163,11 +173,9 @@ def astar_search(problem, h=None, display=True):
 ############################################# driver code
 
 # puzzle = make_rand_8puzzle()
-puzzle = EightPuzzle((1, 2, 3, 4, 5, 6, 7, 0, 8))
-display(puzzle.initial)
-# puzzle = EightPuzzle((0, 2, 3, 1, 5, 7, 6, 4, 8))
-# puzzle = EightPuzzle((0, 8, 5, 3, 4, 7, 2, 6, 1))
-# puzzle = EightPuzzle((2, 6, 5, 0, 3, 4, 7, 8, 1))
+# puzzle = EightPuzzle((1, 2, 3, 4, 5, 6, 7, 0, 8))
+# display(puzzle.initial)
+puzzle = EightPuzzle((8, 2, 0, 4, 3, 1, 6, 5, 7))
 
 ##misplaced-tiles
 print("A* with misplaced-tiles heuristic:")
