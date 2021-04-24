@@ -109,7 +109,7 @@ def inversion(node):
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
                     v_invcount = 2
             node.v_invcount += v_invcount
-        if node.v_invcount == 0 and node.h_invcount == 9 and node.state[8] == 0:
+        if node.v_invcount == 0 and node.state[8] == 0:
             returned_inversions = 0
         else:
             vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
