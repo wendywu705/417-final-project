@@ -16,7 +16,7 @@ def getPossibleMoves(state):
     elif pos == 1:
         possible_moves = [1, 4, -1]
     elif pos == 2:
-        possible_moves = [4, -1]
+        possible_moves = [4, -1,1]
     elif pos == 3:
         possible_moves = [-1, 4]
     elif pos == 4:
@@ -68,23 +68,18 @@ def generatePart3Database():
             next_pos = pos + m
             # Swap tiles.
             next_state[pos], next_state[next_pos] = next_state[next_pos], next_state[pos]
-            ind13=next_state.index(13)
-            ind14=next_state.index(14)
-            ind15=next_state.index(15)
             if next_state[pos] != -1:
                 cost+=1
 
-            indices=[ind13,ind14,ind15]
+            indices=[]
+            for k in range(13,16):
+                indices.append(next_state.index(k))
             next_state_cost = [next_state, cost]
 
             
             entry = ",".join(str(t) for t in indices)
             state_entry = ",".join(str(t) for t in next_state)
-            # print(entry)
-            # print(next_state_cost)
-            result = next((i for i, v in enumerate(entries) if v[0] == entry), None)
-            print(result)
-            if not state_entry in visited :
+            if not state_entry in visited:
                 queue.append(next_state_cost)
                 entries.add((entry,cost))
                 visited.add(state_entry)
@@ -95,9 +90,17 @@ def generatePart3Database():
         if len(entries) >= math.factorial(16)/math.factorial(16-4):
             print("break")
             break
+    
+    entries=sorted(entries,key=lambda x:x[1])
+    finalEntries=set()
+    for k in entries:
+        result = next((i for i, v in enumerate(finalEntries) if v[0] == k[0]), None)
+        if result==None:
+            finalEntries.add(k)
 
+    finalEntries = sorted(finalEntries,key=lambda x:x[1])
     with open("database3.txt", "w") as f:
-        for entry in sorted(entries, key=lambda c: c[1]):
+        for entry in finalEntries:
             json.dump(entry, f)
             f.write("\n")
 
@@ -124,13 +127,21 @@ def generateFirstPart6Database():
             if next_state[pos] != -1:
                 cost+=1
 
+
             next_state_cost = [next_state, cost]
 
-            entry = ",".join(str(t) for t in next_state)
+            indices=[]
+            for k in range(1,7):
+                indices.append(next_state.index(k))
+            next_state_cost = [next_state, cost]
+
+            
+            entry = ",".join(str(t) for t in indices)
+            state_entry = ",".join(str(t) for t in next_state)
             if not entry in visited:
                 queue.append(next_state_cost)
                 entries.add((entry,cost))
-                visited.add(entry)
+                visited.add(state_entry)
         
         # if len(entries) % 10000 == 0:
         #     print("Entries collected: " + str(len(entries)))
@@ -139,8 +150,19 @@ def generateFirstPart6Database():
             print("breaking")
             break
     
-    with open("database6_first.txt", "w") as f:
-        for entry in sorted(entries, key=lambda c: c[1]):
+    print("checking dups")
+    entries=sorted(entries,key=lambda x:x[1])
+    finalEntries=set()
+    for k in entries:
+        result = next((i for i, v in enumerate(finalEntries) if v[0] == k[0]), None)
+        if result==None:
+            finalEntries.add(k)
+
+    print("sorting")
+    finalEntries = sorted(finalEntries,key=lambda x:x[1])
+    print("writing")
+    with open("database3.txt", "w") as f:
+        for entry in finalEntries:
             json.dump(entry, f)
             f.write("\n")
 
@@ -168,11 +190,20 @@ def generateSecondPart6Database():
                 cost+=1
             next_state_cost = [next_state, cost]
 
-            entry = ",".join(str(t) for t in next_state)
-            if not entry in visited:
+            indices=[]
+            for k in range(8,13):
+                indices.append(next_state.index(k))
+            next_state_cost = [next_state, cost]
+
+            
+            entry = ",".join(str(t) for t in indices)
+            state_entry = ",".join(str(t) for t in next_state)
+            result = next((i for i, v in enumerate(entries) if v[0] == entry), None)
+            if not state_entry in visited:
                 queue.append(next_state_cost)
-                entries.add((entry,cost))
-                visited.add(entry)
+                if(result==None):
+                    entries.add((entry,cost))
+                visited.add(state_entry)
         
         # if len(entries) % 10000 == 0:
         #     print("Entries collected: " + str(len(entries)))
@@ -192,6 +223,6 @@ def generateSecondPart6Database():
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
 
-generatePart3Database()
-# generateFirstPart6Database()
+# generatePart3Database()
+generateFirstPart6Database()
 # generateSecondPart6Database()
