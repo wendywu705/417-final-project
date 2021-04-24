@@ -1,6 +1,7 @@
 import sys
 from utils import *
 
+
 class Node:
     """A node in a search tree. Contains a pointer to the parent (the node
     that this is a successor of) and to the actual state for this node. Note
@@ -18,7 +19,11 @@ class Node:
         self.action = action
         self.path_cost = path_cost
         self.depth = 0
+        self.v_invcount = 0
+        self.h_invcount = 0
         if parent:
+            self.v_invcount = parent.v_invcount
+            self.h_invcount = parent.h_invcount
             self.depth = parent.depth + 1
 
     def __repr__(self):
@@ -66,7 +71,7 @@ class Node:
         return hash(self.state)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 
 
 def best_first_graph_search(problem, f, display=False):
@@ -108,7 +113,7 @@ def astar_search(problem, h=None, display=True):
     return best_first_graph_search(problem, lambda n: n.path_cost + h(n), display)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 
 
 def depth_limited_search(problem, limit=50):
