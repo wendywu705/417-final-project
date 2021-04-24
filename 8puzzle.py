@@ -49,8 +49,6 @@ def manhattan(node):
 
 def inversion(node):
     initial = node
-    v_invcount = 0
-    h_invcount = 0
     state = node.state
     transpose_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
     transposed_node = []
@@ -60,23 +58,25 @@ def inversion(node):
             transposed_initial.append(initial.parent.state[i])
         transposed_node.append(state[i])
     if initial.parent is None:
+        v_invcount = 0
+        h_invcount = 0
         for i in range(len(state) - 1):
             for j in range(i + 1, len(state)):
                 if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
                     v_invcount += 1
                 if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
                     h_invcount += 1
-        vertical_lowerbound = math.floor(v_invcount / 2) + v_invcount % 2
-        horizontal_lowerbound = math.floor(h_invcount / 2) + h_invcount % 2
-        returned_inversions = vertical_lowerbound + horizontal_lowerbound
         if v_invcount == 0:
             returned_inversions = 0
         else:
+            vertical_lowerbound = math.floor(v_invcount / 2) + v_invcount % 2
+            horizontal_lowerbound = math.floor(h_invcount / 2) + h_invcount % 2
             returned_inversions = vertical_lowerbound + horizontal_lowerbound
-        node.h_invcount = h_invcount
-        node.v_invcount = v_invcount
-        return returned_inversions
+            node.h_invcount = h_invcount
+            node.v_invcount = v_invcount
     else:
+        v_invcount = 0
+        h_invcount = 0
         prev_blank = initial.parent.state.index(0)
         new_blank = state.index(0)
         moved_tile = state[prev_blank]
@@ -97,7 +97,7 @@ def inversion(node):
                     h_invcount = 2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
                     h_invcount = -2
-            node.h_invcount+= h_invcount
+            node.h_invcount += h_invcount
         # vertical
         else:
             smaller = min(prev_blank, new_blank)
@@ -113,14 +113,14 @@ def inversion(node):
                     v_invcount = -2
                 elif between_tile1 < moved_tile and between_tile2 < moved_tile:
                     v_invcount = 2
-            node.v_invcount+=v_invcount
-        vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
-        horizontal_lowerbound = math.floor(node.h_invcount / 2) + node.h_invcount % 2
-        if v_invcount == 0:
+            node.v_invcount += v_invcount
+        if node.v_invcount == 0:
             returned_inversions = 0
         else:
+            vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
+            horizontal_lowerbound = math.floor(node.h_invcount / 2) + node.h_invcount % 2
             returned_inversions = vertical_lowerbound + horizontal_lowerbound
-        return returned_inversions
+    return returned_inversions
 
 
 ##taken from textbook code
@@ -175,7 +175,8 @@ def astar_search(problem, h=None, display=True):
 # puzzle = make_rand_8puzzle()
 # puzzle = EightPuzzle((1, 2, 3, 4, 5, 6, 7, 0, 8))
 # display(puzzle.initial)
-puzzle = EightPuzzle((8, 2, 0, 4, 3, 1, 6, 5, 7))
+# puzzle = EightPuzzle((8, 2, 0, 4, 3, 1, 6, 5, 7))
+puzzle = EightPuzzle((7, 6, 0, 8, 4, 3, 2, 1, 5))
 
 ##misplaced-tiles
 print("A* with misplaced-tiles heuristic:")
