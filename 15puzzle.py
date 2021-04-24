@@ -81,14 +81,11 @@ def inversion(node):
                     v_invcount += 1
                 if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
                     h_invcount += 1
-        if v_invcount == 0:
-            returned_inversions = 0
-        else:
-            vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
-            horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
-            returned_inversions = vertical_lowerbound + horizontal_lowerbound
-            node.h_invcount = h_invcount
-            node.v_invcount = v_invcount
+        vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
+        horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
+        returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
     else:
         v_invcount = 0
         h_invcount = 0
@@ -163,7 +160,7 @@ def inversion(node):
                 elif bigger_tiles == 1 and smaller_tiles == 2:
                     v_invcount = 1
             node.v_invcount += v_invcount
-        if node.v_invcount == 0:
+        if node.v_invcount == 0 and node.state[15] == 0:
             returned_inversions = 0
         else:
             vertical_lowerbound = math.floor(node.v_invcount / 3) + node.v_invcount % 3
@@ -189,23 +186,23 @@ def max_heuristic(node):
 """
 
 if __name__ == "__main__":
-    puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
+    # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
     # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
-    # puzzle = make_rand_15puzzle()
+    puzzle = make_rand_15puzzle()
     display(puzzle.initial)
     print('solvability = ', puzzle.check_solvability(puzzle.initial))
     print()
 
     ##misplaced-tiles
-    print("A* with misplaced-tiles heuristic:")
-    start_time = time.time()
-
-    sol = astar_search(puzzle, "", True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
-
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    # print("A* with misplaced-tiles heuristic:")
+    # start_time = time.time()
+    #
+    # sol = astar_search(puzzle, "", True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###manhattan
     print("\n\nA* with manhattan heuristic:")
