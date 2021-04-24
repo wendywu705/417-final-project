@@ -1,5 +1,5 @@
 from Puzzle import FifteenPuzzle
-from astar_search import *
+from search import *
 import time
 import math
 
@@ -124,35 +124,36 @@ def max_heuristic(node):
 
 
 if __name__ == "__main__":
-    puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
+    # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
+    puzzle = FifteenPuzzle((2, 10, 6, 4, 3, 0, 5, 7, 11, 9, 1, 8, 13, 14, 15, 12))
     # puzzle = make_rand_15puzzle()
     display(puzzle.initial)
     print('solvability = ', puzzle.check_solvability(puzzle.initial))
     print()
 
     ##misplaced-tiles
-    print("A* with misplaced-tiles heuristic:")
-    start_time = time.time()
-
-    sol = astar_search(puzzle, "", True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
-
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    # print("A* with misplaced-tiles heuristic:")
+    # start_time = time.time()
+    #
+    # sol = astar_search(puzzle, "", True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###manhattan
-    print("\n\nA* with manhattan heuristic:")
-    start_time = time.time()
-
-    # print(astar_search(puzzle,manhattan,True).state)
-    # print(manhattan(Node(puzzle.initial)))
-    sol = astar_search(puzzle, manhattan, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
-
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    # print("\n\nA* with manhattan heuristic:")
+    # start_time = time.time()
+    #
+    # # print(astar_search(puzzle,manhattan,True).state)
+    # # print(manhattan(Node(puzzle.initial)))
+    # sol = astar_search(puzzle, manhattan, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ## inversion
     print("\n\nA* with inversion-distance heuristic:")
@@ -166,12 +167,12 @@ if __name__ == "__main__":
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###Max-misplaced-manhattan
-    print("\n\nA* with max-misplaced-manhattan heuristic:")
-    start_time = time.time()
+    # print("\n\nA* with max-misplaced-manhattan heuristic:")
+    # start_time = time.time()
 
     sol = astar_search(puzzle, max_heuristic, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
-
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')

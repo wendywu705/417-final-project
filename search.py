@@ -1,4 +1,6 @@
 import sys
+from collections import deque
+
 from utils import *
 
 class Node:
@@ -68,6 +70,24 @@ class Node:
 
 #______________________________________________________________________________
 
+# modified textbook code
+def breadth_first_tree_search(puzzle):
+    frontier = deque([Node(puzzle.initial)])  # FIFO queue
+    explored = set()
+
+    while frontier:
+        node = frontier.popleft()
+        if puzzle.goal_test(node.state):
+            print(len(explored), "paths have been expanded and", len(frontier), "paths remain in the frontier")
+            print("Nodes expanded: ", len(explored))
+            return node
+        explored.add(node.state)
+        frontier.extend(node.expand(puzzle))
+    return None
+
+
+#______________________________________________________________________________
+
 
 def best_first_graph_search(problem, f, display=False):
     """Search the nodes with the lowest f scores first.
@@ -108,7 +128,7 @@ def astar_search(problem, h=None, display=True):
     return best_first_graph_search(problem, lambda n: n.path_cost + h(n), display)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 
 
 def depth_limited_search(problem, limit=50):
@@ -139,3 +159,40 @@ def iterative_deepening_search(problem):
         result = depth_limited_search(problem, depth)
         if result != 'cutoff':
             return result
+
+
+# ______________________________________________________________________________
+
+
+def iterative_deepening_astar_search(problem):
+    root = Node(problem.initial)
+    initial_threshold = root.path_cost + problem.h(root)
+    print('initial_threshold = ', initial_threshold)
+    result = depth_search_with_threshold(problem, initial_threshold)
+    if result != 'cutoff':
+        return result
+
+
+def depth_search_with_threshold(problem, threshold):
+    def recursive_dst(node, problem, threshold):
+        f = node.path_cost + problem.h(node)
+        new_min_threshold = f
+        if problem.goal_test(node.state) and f <= threshold:
+            return node
+        else:
+            cutoff_occurred = False
+            for child in node.expand(problem):
+                child_f = child.path_cost + problem.h(child)
+                if (child_f < new_min_threshold):
+                    new_min_threshold = child_f
+                if f <= threshold:
+                    result = recursive_dst(child, problem, threshold)
+                if result == 'cutoff':
+                    cutoff_occurred = True
+                elif result is not None:
+                    return result
+
+            return 'cutoff' if cutoff_occurred else None
+
+    # Body of depth_search_with_threshold:
+    return recursive_dst(Node(problem.initial), problem, threshold)
