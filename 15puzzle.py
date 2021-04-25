@@ -168,6 +168,7 @@ def inversion(node):
             returned_inversions = vertical_lowerbound + horizontal_lowerbound
     return returned_inversions
 
+
 ##taken from textbook code
 def max_heuristic(node):
     mis_score = misplaced(node)
@@ -188,53 +189,61 @@ def max_heuristic(node):
 if __name__ == "__main__":
     # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
     # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
-    puzzle = make_rand_15puzzle()
-    display(puzzle.initial)
-    print('solvability = ', puzzle.check_solvability(puzzle.initial))
-    print()
+    puzzles = []
+    file = open("generated15.txt")
+    Lines = file.readlines()
+    for line in Lines:
+        puzzles.append(eval(line.strip()))
 
-    ##misplaced-tiles
-    # print("A* with misplaced-tiles heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, "", True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    total_start = time.time()
 
-    ###manhattan
-    print("\n\nA* with manhattan heuristic:")
-    start_time = time.time()
+    for line in puzzles:
+        puzzle = FifteenPuzzle(line)
+        display(puzzle.initial)
+        ##misplaced-tiles
+        # print("A* with misplaced-tiles heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, "", True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    # print(astar_search(puzzle,manhattan,True).state)
-    # print(manhattan(Node(puzzle.initial)))
-    sol = astar_search(puzzle, manhattan, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
+        ###manhattan
+        print("\n\nA* with manhattan heuristic:")
+        start_time = time.time()
 
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+        sol = astar_search(puzzle, manhattan, True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
 
-    ## inversion
-    print("\n\nA* with inversion-distance heuristic:")
-    start_time = time.time()
+        elapsed_time = time.time() - start_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    sol = astar_search(puzzle, inversion, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
+        ## inversion
+        print("\n\nA* with inversion-distance heuristic:")
+        start_time = time.time()
 
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+        sol = astar_search(puzzle, inversion, True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
 
-    ###Max-misplaced-manhattan
-    print("\n\nA* with max-misplaced-manhattan heuristic:")
-    start_time = time.time()
+        elapsed_time = time.time() - start_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    sol = astar_search(puzzle, max_heuristic, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
+        ###Max-misplaced-manhattan
+        # print("\n\nA* with max-misplaced-manhattan heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, max_heuristic, True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    total_time = time.time() - total_start
+    print("All puzzles:")
+    print(f'elapsed time (in seconds): {total_time}s')
