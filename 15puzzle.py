@@ -66,26 +66,28 @@ def inversion(node):
     initial = node
     state = node.state
     transpose_order = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15]
+    inverse_order = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12]
     transposed_node = []
     transposed_initial = []
+    v_invcount = 0
+    h_invcount = 0
     for i in transpose_order:
         if initial.parent:
             transposed_initial.append(initial.parent.state[i])
         transposed_node.append(state[i])
-    if initial.parent is None:
-        v_invcount = 0
-        h_invcount = 0
+    if node.parent is None:
         for i in range(len(state) - 1):
             for j in range(i + 1, len(state)):
                 if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
                     v_invcount += 1
-                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
+                inverse_i = transposed_node[i]
+                inverse_j = transposed_node[j]
+                if inverse_i != 0 and inverse_j != 0 and (
+                        inverse_order.index(inverse_i) > inverse_order.index(inverse_j)):
                     h_invcount += 1
         vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
         horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
         returned_inversions = vertical_lowerbound + horizontal_lowerbound
-        node.h_invcount = h_invcount
-        node.v_invcount = v_invcount
     else:
         v_invcount = 0
         h_invcount = 0
@@ -104,7 +106,7 @@ def inversion(node):
             bigger_tiles = 0
             smaller_tiles = 0
             for tile in tiles:
-                if tile > moved_tile:
+                if inverse_order.index(tile) > inverse_order.index(moved_tile):
                     bigger_tiles += 1
                 else:
                     smaller_tiles += 1
@@ -187,14 +189,16 @@ def max_heuristic(node):
 """
 
 if __name__ == "__main__":
-    # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
-    # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
-    puzzles = []
+    # puzzle = (6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11)
+    # puzzle = (0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+    # puzzle2 = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15)
+    # puzzles = [puzzle2]
+    puzzles=[]
     file = open("generated15.txt")
     Lines = file.readlines()
     for line in Lines:
         puzzles.append(eval(line.strip()))
-
+    #
     total_start = time.time()
     misplaced_time = 0
     mhd_time = 0
@@ -204,16 +208,16 @@ if __name__ == "__main__":
         puzzle = FifteenPuzzle(line)
         display(puzzle.initial)
         ##misplaced-tiles
-        print("A* with misplaced-tiles heuristic:")
-        start_time = time.time()
-
-        sol = astar_search(puzzle, "", True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
-
-        elapsed_time = time.time() - start_time
-        misplaced_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
+        # print("A* with misplaced-tiles heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, "", True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # misplaced_time += elapsed_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
 
         ###manhattan
         print("\n\nA* with manhattan heuristic:")
