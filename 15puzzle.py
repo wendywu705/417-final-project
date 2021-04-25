@@ -1,5 +1,5 @@
 from Puzzle import FifteenPuzzle
-from astar_search import *
+from search import *
 import time
 import math
 
@@ -185,6 +185,7 @@ def max_heuristic(node):
                                 ----------------------------
 
 """
+
 
 if __name__ == "__main__":
     # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
