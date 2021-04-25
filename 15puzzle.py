@@ -2,6 +2,8 @@ from Puzzle import FifteenPuzzle
 from search import *
 import time
 import math
+import json
+import ast
 
 N = 4
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
@@ -177,6 +179,35 @@ def max_heuristic(node):
     return max(mis_score, man_score)
 
 
+def fringePDB(node):
+
+    pat1State=[]
+    pat2State=[]
+    pat3State=[]
+    for k in range(1,6):
+        pat1State.append(node.state.index(k))
+    for k in range(6,11):
+        pat2State.append(node.state.index(k))
+    for k in range(11,16):
+        pat3State.append(node.state.index(k))
+
+    pat1State=",".join(str(t) for t in pat1State)
+    pat2State=",".join(str(t) for t in pat2State)
+    pat3State=",".join(str(t) for t in pat3State)
+
+    # db1Line=next((i for i, colour in enumerate(lines1)if pat1State in lines1),None)
+    # print('found1')
+    # db2Line=next((i for i, colour in enumerate(lines2)if pat2State in lines2),None)
+    # print('found2')
+    # db3Line=next((i for i, colour in enumerate(lines3)if pat3State in lines3),None)
+    # print('found3')
+
+    pat1Cost=lines1[pat1State]
+    pat2Cost=lines2[pat2State]
+    pat3Cost=lines3[pat3State]
+
+    return max(pat1Cost,pat2Cost,pat3Cost)
+
 """ 
                                 ---------------------------- 
 
@@ -188,78 +219,97 @@ def max_heuristic(node):
 
 
 if __name__ == "__main__":
+
+    with open("database1-5.txt",'r') as db1:
+        lines1=db1.read()
+    lines1=lines1.split('\n')
+    line1dict={}
+    for k in lines1:
+        if k=='':
+            break
+        t=eval(k)
+        line1dict[t[0]]=t[1]
+    lines1=line1dict
+    with open("database6-10.txt",'r') as db2:
+        lines2=db2.read()
+    lines2=lines2.split('\n')
+    line2dict={}
+    for k in lines2:
+        if k=='':
+            break
+        t=eval(k)
+        line2dict[t[0]]=t[1]
+    lines2=line2dict
+    with open("database11-15.txt",'r') as db3:
+        lines3=db3.read()
+    lines3=lines3.split('\n')
+    line3dict={}
+    for k in lines3:
+        if k=='':
+            break
+        t=eval(k)
+        line3dict[t[0]]=t[1]
+    lines3=line3dict
+
     # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
-    # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
-    puzzles = []
-    file = open("generated15.txt")
-    Lines = file.readlines()
-    for line in Lines:
-        puzzles.append(eval(line.strip()))
+    # puzzle = FifteenPuzzle((1,2,3,4,5,6,7,8,9,10,11,12,13,14,0,15))
+    puzzle = make_rand_15puzzle()
+    display(puzzle.initial)
+    print('solvability = ', puzzle.check_solvability(puzzle.initial))
+    print()
 
-    total_start = time.time()
-    misplaced_time = 0
-    mhd_time = 0
-    inversion_time = 0
+    # ##misplaced-tiles
+    # print("A* with misplaced-tiles heuristic:")
+    # start_time = time.time()
 
-    for line in puzzles:
-        puzzle = FifteenPuzzle(line)
-        display(puzzle.initial)
-        ##misplaced-tiles
-        print("A* with misplaced-tiles heuristic:")
-        start_time = time.time()
+    # sol = astar_search(puzzle, "", True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
 
-        sol = astar_search(puzzle, "", True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-        elapsed_time = time.time() - start_time
-        misplaced_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
+    ###manhattan
+    # print("\n\nA* with manhattan heuristic:")
+    # start_time = time.time()
 
-        ###manhattan
-        print("\n\nA* with manhattan heuristic:")
-        start_time = time.time()
+    # # print(astar_search(puzzle,manhattan,True).state)
+    # # print(manhattan(Node(puzzle.initial)))
+    # sol = astar_search(puzzle, manhattan, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
 
-        sol = astar_search(puzzle, manhattan, True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-        elapsed_time = time.time() - start_time
-        mhd_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
+    # ## inversion
+    # print("\n\nA* with inversion-distance heuristic:")
+    # start_time = time.time()
 
-        ## inversion
-        print("\n\nA* with inversion-distance heuristic:")
-        start_time = time.time()
+    # sol = astar_search(puzzle, inversion, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
 
-        sol = astar_search(puzzle, inversion, True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-        elapsed_time = time.time() - start_time
-        inversion_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
+    # ###Max-misplaced-manhattan
+    # print("\n\nA* with max-misplaced-manhattan heuristic:")
+    # start_time = time.time()
 
-        ###Max-misplaced-manhattan
-        # print("\n\nA* with max-misplaced-manhattan heuristic:")
-        # start_time = time.time()
-        #
-        # sol = astar_search(puzzle, max_heuristic, True).solution()
-        # print("Solution: ", sol)
-        # print("Solution length: ", len(sol))
-        #
-        # elapsed_time = time.time() - start_time
-        # print(f'elapsed time (in seconds): {elapsed_time}s')
+    # sol = astar_search(puzzle, max_heuristic, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
 
-    total_time = time.time() - total_start
-    print("\nAll 5000 puzzles:")
-    print(f'elapsed time (in seconds): {total_time}s')
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    print("\nAll puzzles w/ Misplaced Distance:")
-    print(f'elapsed time (in seconds): {misplaced_time}s')
+    print("\n\nA* with fringe pdb heuristic:")
+    start_time = time.time()
 
-    print("\nAll puzzles w/ Manhattan Distance:")
-    print(f'elapsed time (in seconds): {mhd_time}s')
+    sol = astar_search(puzzle, fringePDB, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
 
-    print("\nAll puzzles w/ Inversion Distance:")
-    print(f'elapsed time (in seconds): {inversion_time}s')
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
