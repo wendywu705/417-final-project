@@ -251,9 +251,9 @@ if __name__ == "__main__":
         line3dict[t[0]]=t[1]
     lines3=line3dict
 
-    puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
+    # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
     # puzzle = FifteenPuzzle((1,2,3,4,5,6,7,8,9,10,11,12,13,14,0,15))
-    # puzzle = make_rand_15puzzle()
+    puzzle = make_rand_15puzzle()
     display(puzzle.initial)
     print('solvability = ', puzzle.check_solvability(puzzle.initial))
     print()
@@ -270,17 +270,17 @@ if __name__ == "__main__":
     # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     ###manhattan
-    print("\n\nA* with manhattan heuristic:")
-    start_time = time.time()
+    # print("\n\nA* with manhattan heuristic:")
+    # start_time = time.time()
 
-    # print(astar_search(puzzle,manhattan,True).state)
-    # print(manhattan(Node(puzzle.initial)))
-    sol = astar_search(puzzle, manhattan, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
+    # # print(astar_search(puzzle,manhattan,True).state)
+    # # print(manhattan(Node(puzzle.initial)))
+    # sol = astar_search(puzzle, manhattan, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
 
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     # ## inversion
     # print("\n\nA* with inversion-distance heuristic:")

@@ -148,6 +148,11 @@ def max_heuristic(node):
     # inv_score = inversion(node)
     return max(mis_score, man_score)
 
+def fullPDB(node):
+
+    state = ",".join(str(t) for t in node.state)
+    return lines[state]
+
 
 """ 
                                 ---------------------------- 
@@ -168,21 +173,22 @@ if __name__ == "__main__":
 
     # elapsed_time = time.time() - start_time
     # print(f'elapsed time (in seconds): {elapsed_time}s\n\n')
+    
+    #create full pdb lookup table
+    with open("8puzzleDatabase.txt",'r') as db:
+        lines=db.read()
+    lines=lines.split('\n')
+    linedict={}
+    for k in lines:
+        if k=='':
+            break
+        t=eval(k)
+        linedict[t[0]]=t[1]
+    lines=linedict
 
     puzzle = make_rand_8puzzle()
     display(puzzle.initial)
 
-
-    ### misplaced-tiles
-    print("A* with misplaced-tiles heuristic:")
-    start_time = time.time()
-
-    sol = astar_search(puzzle, "", True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
-
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
 
 
     ### manhattan
@@ -221,13 +227,14 @@ if __name__ == "__main__":
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
 
-    # ###Max-misplaced-manhattan
-    # print("\n\nA* with max-misplaced-manhattan heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, max_heuristic, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    #FUll PDB
+
+    print("\n\nA* with full PDB heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, fullPDB, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
