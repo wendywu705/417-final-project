@@ -324,7 +324,7 @@ if __name__ == "__main__":
         fringe_time += elapsed_time
         print(f'elapsed time (in seconds): {elapsed_time}s')
 
-        append_row('results15/walking_dist.csv', [line, sol, len(sol), elapsed_time])
+        append_row('results15/fringe_PDB.csv', [line, sol, len(sol), elapsed_time])
 
     total_time = time.time() - total_start
     print("\nAll puzzles:")
