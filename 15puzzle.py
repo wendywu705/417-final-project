@@ -3,6 +3,8 @@ from search import *
 import time
 import math
 
+from walking_distance import *
+
 N = 4
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
@@ -169,7 +171,18 @@ def inversion(node):
     return returned_inversions
 
 
-##taken from textbook code
+def walking_distance(node):
+    '''
+    row_state = convert_to_15puzzle_row_distance_state(node.state)
+    row_distance = walking_distance_row_table[row_state]
+
+    col_state = convert_to_15puzzle_column_distance_state(node.state)
+    col_distance = walking_distance_col_table[col_state]
+    return row_distance + col_distance
+    '''
+
+
+## taken from textbook code
 def max_heuristic(node):
     mis_score = misplaced(node)
     man_score = manhattan(node)
@@ -188,8 +201,16 @@ def max_heuristic(node):
 
 
 if __name__ == "__main__":
-    # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
-    # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
+    # print("\n\nCreating Walking Distance lookup table:")
+    # start_time = time.time()
+    #
+    # create_15puzzle_walking_distance_table()  ## only need to run this for the first time to generate the lookup files
+    # walking_distance_row_table = load_table_from_file('row_distance_db_15puzzle.txt')
+    # walking_distance_col_table = load_table_from_file('col_distance_db_15puzzle.txt')
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s\n\n')
+
     puzzles = []
     file = open("generated15.txt")
     Lines = file.readlines()
@@ -239,6 +260,18 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start_time
         inversion_time += elapsed_time
         print(f'elapsed time (in seconds): {elapsed_time}s')
+
+        ## walking distance
+        # print("\n\nA* with walking distance heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, walking_distance, True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # inversion_time += elapsed_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
 
         ###Max-misplaced-manhattan
         # print("\n\nA* with max-misplaced-manhattan heuristic:")

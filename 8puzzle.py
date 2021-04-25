@@ -156,9 +156,9 @@ def max_heuristic(node):
 if __name__ == "__main__":
     print("\n\nCreating Walking Distance lookup table:")
     # start_time = time.time()
-
-    # create_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
-    walking_distance_table = load_table_from_file('walking_distance_db.txt')
+    #
+    # create_8puzzle_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
+    walking_distance_table = load_table_from_file('walking_distance_db_8puzzle.txt')
     print(f'The Walking Distance lookup table has {len(walking_distance_table)} entries.\n\n')
 
     # elapsed_time = time.time() - start_time

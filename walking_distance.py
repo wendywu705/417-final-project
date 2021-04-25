@@ -1,7 +1,9 @@
 import ast
+from collections import Counter
 from itertools import permutations
+from typing import List
 
-from Puzzle import Puzzle, EightPuzzle
+from Puzzle import Puzzle, EightPuzzle, FifteenPuzzle
 from search import *
 
 """
@@ -14,23 +16,55 @@ from search import *
 
 """
 
-goal_position = {'A': 0, 'B': 1, 'C': 2}
+
+def load_table_from_file(filename):
+    with open(filename) as file:
+        data = file.read()
+    new_dict = ast.literal_eval(data)
+    return new_dict
 
 
-def manhanttan8(node):
+def write_table_to_file(filename, table):
+    try:
+        table_file = open(filename, 'wt')
+        table_file.write(str(table))
+        table_file.close()
+
+    except:
+        print("Unable to write table to file")
+
+
+'''     -------------------- Generating WD Lookup Table For 8-Puzzle --------------------   '''
+
+
+goal_position_8 = {'A': 0, 'B': 1, 'C': 2}
+
+
+def manhanttan_row_8(node):
     total_distance = 0
     for i in range(9):
         tile = node.state[i]
         if (tile != '*'):
-            tile_goal_position = goal_position[tile]
-
-            tile_current_column = i % 3
-            horizontal_distance = abs(tile_current_column - tile_goal_position)
+            tile_goal_row = goal_position_8[tile]
 
             tile_current_row = i // 3
-            vertical_distance = abs(tile_current_row - tile_goal_position)
+            vertical_distance = abs(tile_current_row - tile_goal_row)
 
-            total_distance += horizontal_distance + vertical_distance
+            total_distance += vertical_distance
+    return total_distance
+
+
+def manhanttan_col_8(node):
+    total_distance = 0
+    for i in range(9):
+        tile = node.state[i]
+        if (tile != '*'):
+            tile_goal_column = goal_position_8[tile]
+
+            tile_current_column = i % 3
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
+
+            total_distance += horizontal_distance
     return total_distance
 
 
@@ -46,23 +80,7 @@ def generate_all_solvable_8puzzles():
     return solvable
 
 
-def load_table_from_file(filename):
-    with open(filename) as file:
-        data = file.read()
-    new_dict = ast.literal_eval(data)
-    return new_dict
-
-
-def create_walking_distance_table():
-    def write_table_to_file(filename, table):
-        try:
-            table_file = open(filename, 'wt')
-            table_file.write(str(table))
-            table_file.close()
-
-        except:
-            print("Unable to write table to file")
-
+def create_8puzzle_walking_distance_table():
     def save_wd_row_col_table(row_filename, col_filename):
         states = list(set(permutations(['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'])))
         wd_row_table = {}
@@ -75,10 +93,10 @@ def create_walking_distance_table():
             # display_walking_distance_state(row_puzzle.initial)
             # display_walking_distance_state(col_puzzle.initial)
 
-            row_distance = len(astar_search(row_puzzle, manhanttan8, False).solution())
+            row_distance = len(astar_search(row_puzzle, manhanttan_row_8, False).solution())
             wd_row_table[state] = row_distance
 
-            col_distance = len(astar_search(col_puzzle, manhanttan8, False).solution())
+            col_distance = len(astar_search(col_puzzle, manhanttan_col_8, False).solution())
             wd_col_table[state] = col_distance
 
         write_table_to_file(row_filename, wd_row_table)
@@ -91,8 +109,8 @@ def create_walking_distance_table():
         configurations = generate_all_solvable_8puzzles()
 
         for configuration in configurations:
-            row_puzzle = WalkingRowDistance8Puzzle(convert_to_walking_row_distance_state(configuration))
-            col_puzzle = WalkingColumnDistance8Puzzle(convert_to_walking_column_distance_state(configuration))
+            row_puzzle = WalkingRowDistance8Puzzle(convert_to_8puzzle_row_distance_state(configuration))
+            col_puzzle = WalkingColumnDistance8Puzzle(convert_to_8puzzle_column_distance_state(configuration))
 
             row_distance = wd_row_table[row_puzzle.initial]
             col_distance = wd_col_table[col_puzzle.initial]
@@ -101,11 +119,140 @@ def create_walking_distance_table():
         write_table_to_file(wd_filename, wd_table)
 
     # body of create_walking_distance_table()
-    row_file = 'row_distance_db.txt'
-    col_file = 'col_distance_db.txt'
-    wd_file = 'walking_distance_db.txt'
+    row_file = 'row_distance_db_8puzzle.txt'
+    col_file = 'col_distance_db_8puzzle.txt'
+    wd_file = 'walking_distance_db_8puzzle.txt'
     save_wd_row_col_table(row_file, col_file)
     save_wd_full_table(wd_file, row_file, col_file)
+
+
+'''     -------------------- Generating WD Lookup Table For 15-Puzzle --------------------   '''
+
+goal_position_15 = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+
+
+def manhanttan_row_15(node):
+    total_distance = 0
+    for i in range(16):
+        tile = node.state[i]
+        if (tile != '*'):
+            tile_goal_row = goal_position_15[tile]
+
+            tile_current_row = i // 4
+            vertical_distance = abs(tile_current_row - tile_goal_row)
+
+            total_distance += vertical_distance
+    return total_distance
+
+
+def manhanttan_col_15(node):
+    total_distance = 0
+    for i in range(16):
+        tile = node.state[i]
+        if (tile != '*'):
+            tile_goal_column = goal_position_15[tile]
+
+            tile_current_column = i % 4
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
+
+            total_distance += horizontal_distance
+    return total_distance
+
+
+def generate_all_solvable_15puzzles():
+    solvable = list()
+    states = list(permutations(range(0, 16)))
+
+    for state in states:
+        new_puzzle = FifteenPuzzle(state)
+        if new_puzzle.check_solvability(new_puzzle.initial):
+            solvable.append(state)
+
+    return solvable
+
+
+def create_15puzzle_walking_distance_table():
+    def generate_unique_permutations(nums: List[int]) -> List[List[int]]:
+        results = []
+
+        def backtrack(comb, counter):
+            if len(comb) == len(nums):
+                # make a deep copy of the resulting permutation,
+                # since the permutation would be backtracked later.
+                results.append(tuple(comb))
+                print(results)
+                print()
+                return
+
+            for num in counter:
+                if counter[num] > 0:
+                    # add this number into the current combination
+                    if num == 1:
+                        comb.append('A')
+                    elif num == 2:
+                        comb.append('B')
+                    elif num == 3:
+                        comb.append('C')
+                    elif num == 4:
+                        comb.append('D')
+                    else:
+                        comb.append('*')
+                    counter[num] -= 1
+                    # continue the exploration
+                    backtrack(comb, counter)
+                    # revert the choice for the next exploration
+                    comb.pop()
+                    counter[num] += 1
+
+        backtrack([], Counter(nums))
+
+        return results
+
+
+    def save_wd_row_col_table(row_filename, col_filename):
+        states = generate_unique_permutations([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 0])
+        wd_row_table = {}
+        wd_col_table = {}
+
+        for state in states:
+            # print('Processing state ', states.index(state))
+            row_puzzle = WalkingRowDistance15Puzzle(state)
+            col_puzzle = WalkingColumnDistance15Puzzle(state)
+            # display_walking_distance_state(row_puzzle.initial)
+            # display_walking_distance_state(col_puzzle.initial)
+
+            row_distance = len(astar_search(row_puzzle, manhanttan_row_15, False).solution())
+            wd_row_table[state] = row_distance
+
+            col_distance = len(astar_search(col_puzzle, manhanttan_col_15, False).solution())
+            wd_col_table[state] = col_distance
+
+        write_table_to_file(row_filename, wd_row_table)
+        write_table_to_file(col_filename, wd_col_table)
+
+
+    def save_wd_full_table(wd_filename, row_filename, col_filename):
+        wd_table = {}
+        wd_row_table = load_table_from_file(row_filename)
+        wd_col_table = load_table_from_file(col_filename)
+        configurations = generate_all_solvable_15puzzles()
+
+        for configuration in configurations:
+            row_puzzle = WalkingRowDistance15Puzzle(convert_to_15puzzle_row_distance_state(configuration))
+            col_puzzle = WalkingColumnDistance15Puzzle(convert_to_15puzzle_column_distance_state(configuration))
+
+            row_distance = wd_row_table[row_puzzle.initial]
+            col_distance = wd_col_table[col_puzzle.initial]
+            wd_table[configuration] = row_distance + col_distance
+
+        write_table_to_file(wd_filename, wd_table)
+
+    # body of create_walking_distance_table()
+    row_file = 'row_distance_db_15puzzle.txt'
+    col_file = 'col_distance_db_15puzzle.txt'
+    # wd_file = 'walking_distance_db_15puzzle.txt'
+    save_wd_row_col_table(row_file, col_file)
+    # save_wd_full_table(wd_file, row_file, col_file)
 
 
 """
@@ -129,7 +276,7 @@ def display_walking_distance_state(state):
     print()
 
 
-def convert_to_walking_row_distance_state(state):
+def convert_to_8puzzle_row_distance_state(state):
     new_state = list()
     for tile in state:
         if tile != 0:
@@ -144,7 +291,7 @@ def convert_to_walking_row_distance_state(state):
     return tuple(new_state)
 
 
-def convert_to_walking_column_distance_state(state):
+def convert_to_8puzzle_column_distance_state(state):
     new_state = list()
     for tile in state:
         if tile != 0:
@@ -154,6 +301,40 @@ def convert_to_walking_column_distance_state(state):
                 new_state.append('B')
             else:
                 new_state.append('C')
+        else:
+            new_state.append('*')
+    return tuple(new_state)
+
+
+def convert_to_15puzzle_row_distance_state(state):
+    new_state = list()
+    for tile in state:
+        if tile != 0:
+            if (tile - 1) // 4 == 0:
+                new_state.append('A')
+            elif (tile - 1) // 4 == 1:
+                new_state.append('B')
+            elif (tile-1) // 4 == 2:
+                new_state.append('C')
+            else:
+                new_state.append('D')
+        else:
+            new_state.append('*')
+    return tuple(new_state)
+
+
+def convert_to_15puzzle_column_distance_state(state):
+    new_state = list()
+    for tile in state:
+        if tile != 0:
+            if tile % 4 == 1:
+                new_state.append('A')
+            elif tile % 4 == 2:
+                new_state.append('B')
+            elif tile % 4 == 3:
+                new_state.append('C')
+            else:
+                new_state.append('D')
         else:
             new_state.append('*')
     return tuple(new_state)
