@@ -4,7 +4,6 @@ import json
 import math
 import time
 import itertools
-from typing import List
 
 goal_part61 = [1, 2, 3, 4, 5, -1, -1, -1,-1,-1,-1,-1,-1,-1,-1,0]
 goal_part62=[-1,-1,-1,-1,-1,6,7,8,9,10,-1,-1,-1,-1,-1,0]
