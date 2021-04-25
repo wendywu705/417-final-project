@@ -4,7 +4,6 @@ from itertools import permutations
 from Puzzle import Puzzle, EightPuzzle
 from search import *
 
-
 """
 
                                     -------------------------------- 
@@ -15,8 +14,8 @@ from search import *
 
 """
 
-
 goal_position = {'A': 0, 'B': 1, 'C': 2}
+
 
 def manhanttan(node):
     total_distance = 0
@@ -64,7 +63,6 @@ def create_walking_distance_table():
         except:
             print("Unable to write table to file")
 
-
     def save_wd_row_col_table(row_filename, col_filename):
         states = list(set(permutations(['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'])))
         wd_row_table = {}
@@ -85,7 +83,6 @@ def create_walking_distance_table():
 
         write_table_to_file(row_filename, wd_row_table)
         write_table_to_file(col_filename, wd_col_table)
-
 
     def save_wd_full_table(wd_filename, row_filename, col_filename):
         wd_table = {}
@@ -178,9 +175,10 @@ row_goals = [('A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'),
 
 
 class WalkingRowDistance8Puzzle(Puzzle):
-    """ The problem of sliding tiles numbered from 1 to 8 on a 3x3 board, where one of the
-    squares is a blank. A state is represented as a tuple of length 9, where  element at
-    index i represents the tile number  at index i (0 if it's an empty square) """
+    """ The problem of sliding tiles on a 3x3 board, where one of the squares is a blank.
+    A state is the collapsed row version of a 8-puzzle configuration, represented as a tuple of length 9,
+    where element is A, B or C, where A, B and C represent the tiles at ROW 1, ROW 2 and ROW 3 respectively
+    in the goal state of 8-puzzle (* if it's an empty square, i.e. tile 0 in 8-puzzle) """
 
     def __init__(self, initial, goal=row_goals):
         """ Define goal state and initialize a problem """
@@ -188,13 +186,11 @@ class WalkingRowDistance8Puzzle(Puzzle):
 
     def find_blank_square(self, state):
         """Return the index of the blank square in a given state"""
-
         return state.index('*')
 
     def actions(self, state):
         """ Return the actions that can be executed in the given state.
-        The result would be a list, since there are only four possible actions
-        in any given state of the environment """
+        The result would be a list."""
 
         possible_actions = ['UP', 'UP_RIGHT', 'UP_RIGHTMOST', 'UP_LEFT', 'UP_LEFTMOST',
                             'DOWN', 'DOWN_RIGHT', 'DOWN_RIGHTMOST', 'DOWN_LEFT', 'DOWN_LEFTMOST']
@@ -206,12 +202,14 @@ class WalkingRowDistance8Puzzle(Puzzle):
             possible_actions.remove('UP_RIGHTMOST')
             possible_actions.remove('UP_LEFT')
             possible_actions.remove('UP_LEFTMOST')
+
         if index_blank_square > 5:
             possible_actions.remove('DOWN')
             possible_actions.remove('DOWN_RIGHT')
             possible_actions.remove('DOWN_RIGHTMOST')
             possible_actions.remove('DOWN_LEFT')
             possible_actions.remove('DOWN_LEFTMOST')
+
         if index_blank_square % 3 == 0:
             if index_blank_square >= 3:
                 possible_actions.remove('UP_LEFT')
@@ -219,6 +217,7 @@ class WalkingRowDistance8Puzzle(Puzzle):
             if index_blank_square <= 5:
                 possible_actions.remove('DOWN_LEFT')
                 possible_actions.remove('DOWN_LEFTMOST')
+
         if index_blank_square % 3 == 1:
             if index_blank_square >= 3:
                 possible_actions.remove('UP_RIGHTMOST')
@@ -226,6 +225,7 @@ class WalkingRowDistance8Puzzle(Puzzle):
             if index_blank_square <= 5:
                 possible_actions.remove('DOWN_RIGHTMOST')
                 possible_actions.remove('DOWN_LEFTMOST')
+
         if index_blank_square % 3 == 2:
             if index_blank_square >= 3:
                 possible_actions.remove('UP_RIGHT')
@@ -238,7 +238,7 @@ class WalkingRowDistance8Puzzle(Puzzle):
 
     def result(self, state, action):
         """ Given state and action, return a new state that is the result of the action.
-        Action is assumed to be a valid action in the state """
+        Action is assumed to be a valid action in the state. """
 
         # blank is the index of the blank square
         blank = self.find_blank_square(state)
@@ -257,7 +257,7 @@ class WalkingRowDistance8Puzzle(Puzzle):
         return state in self.goal
 
     def check_solvability(self, state):
-        return True     ## all configurations are solvable
+        return True  ## all configurations are solvable
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is
@@ -282,9 +282,10 @@ col_goals = [('A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', '*'),
 
 
 class WalkingColumnDistance8Puzzle(Puzzle):
-    """ The problem of sliding tiles numbered from 1 to 8 on a 3x3 board, where one of the
-    squares is a blank. A state is represented as a tuple of length 9, where  element at
-    index i represents the tile number  at index i (0 if it's an empty square) """
+    """ The problem of sliding tiles on a 3x3 board, where one of the squares is a blank.
+    A state is the collapsed row version of a 8-puzzle configuration, represented as a tuple of length 9,
+    where element is A, B or C, where A, B and C represent the tiles at COLUMN 1, COLUMN 2 and COLUMN 3 respectively
+    in the goal state of 8-puzzle (* if it's an empty square, i.e. tile 0 in 8-puzzle) """
 
     def __init__(self, initial, goal=col_goals):
         """ Define goal state and initialize a problem """
@@ -292,13 +293,11 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
     def find_blank_square(self, state):
         """Return the index of the blank square in a given state"""
-
         return state.index('*')
 
     def actions(self, state):
         """ Return the actions that can be executed in the given state.
-        The result would be a list, since there are only four possible actions
-        in any given state of the environment """
+        The result would be a list. """
 
         possible_actions = ['RIGHT', 'RIGHT_UP', 'RIGHT_UPMOST', 'RIGHT_DOWN', 'RIGHT_DOWNMOST',
                             'LEFT', 'LEFT_UP', 'LEFT_UPMOST', 'LEFT_DOWN', 'LEFT_DOWNMOST']
@@ -310,12 +309,14 @@ class WalkingColumnDistance8Puzzle(Puzzle):
             possible_actions.remove('LEFT_UPMOST')
             possible_actions.remove('LEFT_DOWN')
             possible_actions.remove('LEFT_DOWNMOST')
+
         if index_blank_square % 3 == 2:
             possible_actions.remove('RIGHT')
             possible_actions.remove('RIGHT_UP')
             possible_actions.remove('RIGHT_UPMOST')
             possible_actions.remove('RIGHT_DOWN')
             possible_actions.remove('RIGHT_DOWNMOST')
+
         if index_blank_square < 3:
             if index_blank_square % 3 != 0:
                 possible_actions.remove('LEFT_UP')
@@ -323,6 +324,7 @@ class WalkingColumnDistance8Puzzle(Puzzle):
             if index_blank_square % 3 != 2:
                 possible_actions.remove('RIGHT_UP')
                 possible_actions.remove('RIGHT_UPMOST')
+
         if 3 <= index_blank_square <= 5:
             if index_blank_square % 3 != 0:
                 possible_actions.remove('LEFT_DOWNMOST')
@@ -330,6 +332,7 @@ class WalkingColumnDistance8Puzzle(Puzzle):
             if index_blank_square % 3 != 2:
                 possible_actions.remove('RIGHT_DOWNMOST')
                 possible_actions.remove('RIGHT_UPMOST')
+
         if index_blank_square > 5:
             if index_blank_square % 3 != 0:
                 possible_actions.remove('LEFT_DOWN')
@@ -342,7 +345,7 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
     def result(self, state, action):
         """ Given state and action, return a new state that is the result of the action.
-        Action is assumed to be a valid action in the state """
+        Action is assumed to be a valid action in the state. """
 
         # blank is the index of the blank square
         blank = self.find_blank_square(state)
@@ -357,11 +360,10 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
     def goal_test(self, state):
         """ Given a state, return True if state is a goal state or False, otherwise """
-
         return state in self.goal
 
     def check_solvability(self, state):
-        return True     ## all configurations are solvable
+        return True  ## all configurations are solvable
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is

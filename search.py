@@ -14,6 +14,7 @@ from utils import *
 """
 
 
+# taken from the textbook
 class Node:
     """A node in a search tree. Contains a pointer to the parent (the node
     that this is a successor of) and to the actual state for this node. Note
@@ -92,6 +93,7 @@ class Node:
                                 ----------------------------
 
 """
+
 
 # modified textbook code
 def breadth_first_tree_search(puzzle):
@@ -209,7 +211,6 @@ def iterative_deepening_search(problem):
                                 ----------------------------
 
 """
-
 
 """ 
 
