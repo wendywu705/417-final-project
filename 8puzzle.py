@@ -1,21 +1,27 @@
-from astar_search import *
+import ast
+from itertools import permutations
+
+from Puzzle import EightPuzzle
+from search import *
 import time
 import math
 
-goal_state = (0, 1, 2, 3, 4, 5, 6, 7, 8)
+from walking_distance import *
+
+goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 
 def make_rand_8puzzle():
-    while True:
-        temp = tuple(random.sample((0, 1, 2, 3, 4, 5, 6, 7, 8), 9))
-        new_puzzle = EightPuzzle(temp, goal_state)
-        if new_puzzle.check_solvability(temp):
-            print("State: ")
-            display(temp)
-            return new_puzzle
+    found_solvable_puzzle = False
+    new_puzzle = EightPuzzle(goal_state)
+    while not found_solvable_puzzle:
+        state = tuple(random.sample(goal_state, 9))
+        new_puzzle = EightPuzzle(state)
+        if new_puzzle.check_solvability(new_puzzle.initial):
+            found_solvable_puzzle = True
+    return new_puzzle
 
 
-# temp = tuple(random.sample((0,1,2,3,4,5,6,7,8), 9))
 def display(state):
     cnt = 0
     for num in state:
@@ -29,69 +35,110 @@ def display(state):
     print()
 
 
-###Heuristics
+""" 
+                                ---------------------------- 
+
+                        ---------------- Heuristics ----------------
+
+                                ----------------------------
+
+"""
+
 
 ##taken from textbook code
 def misplaced(node):
     return sum(s != g for (s, g) in zip(node.state, goal_state))
 
 
-###taken from textbook
 def manhattan(node):
-    state = node.state
-    index_goal = {0: [0, 0], 1: [0, 1], 2: [0, 2], 3: [1, 0], 4: [1, 1], 5: [1, 2], 6: [2, 0], 7: [2, 1], 8: [2, 2]}
-    index_state = {}
-    index = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
-    x, y = 0, 0
+    total_distance = 0
+    for tile in node.state:
+        if (tile != 0):
+            tile_goal_column = (tile - 1) % 3
+            tile_current_column = node.state.index(tile) % 3
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
 
-    for i in range(len(state)):
-        index_state[state[i]] = index[i]
+            tile_goal_row = (tile - 1) // 3
+            tile_current_row = node.state.index(tile) // 3
+            vertical_distance = abs(tile_current_row - tile_goal_row)
 
-    mhd = 0
-
-    # modified to not consider blank tile
-    for i in range(1, 9):
-        for j in range(2):
-            mhd += abs(index_goal[i][j] - index_state[i][j])
-
-    return mhd
+            total_distance += horizontal_distance + vertical_distance
+    return total_distance
 
 
 def inversion(node):
-    node = node.state
-    # left-to-right, top-to-bottom fashion
-    vertical_inversions = 0
-    for i in range(9):
-        if node[i] == 0:
-            continue
-        for j in range(i + 1, 9):
-            if node[j] == 0:
-                continue
-            if node[j] < node[i]:
-                vertical_inversions += 1
-    vertical_lowerbound = math.floor(vertical_inversions / 3) + vertical_inversions % 3
+    initial = node
+    state = node.state
+    transpose_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
+    transposed_node = []
+    transposed_initial = []
+    v_invcount = 0
+    h_invcount = 0
+    for i in transpose_order:
+        if initial.parent:
+            transposed_initial.append(initial.parent.state[i])
+        transposed_node.append(state[i])
+    if initial.parent is None:
+        for i in range(len(state) - 1):
+            for j in range(i + 1, len(state)):
+                if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
+                    v_invcount += 1
+                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
+                    h_invcount += 1
+        vertical_lowerbound = math.floor(v_invcount / 2) + v_invcount % 2
+        horizontal_lowerbound = math.floor(h_invcount / 2) + h_invcount % 2
+        returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
+    else:
+        prev_blank = initial.parent.state.index(0)
+        new_blank = state.index(0)
+        moved_tile = state[prev_blank]
+        # horizontal
+        if initial.action == 'LEFT' or initial.action == 'RIGHT':
+            prev_blank = transposed_initial.index(0)
+            new_blank = transposed_node.index(0)
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = transposed_node[smaller + 1]
+            between_tile2 = transposed_node[smaller + 2]
+            if initial.action == 'RIGHT':
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    h_invcount = -2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    h_invcount = 2
+            else:
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    h_invcount = 2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    h_invcount = -2
+            node.h_invcount += h_invcount
+        # vertical
+        else:
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = state[smaller + 1]
+            between_tile2 = state[smaller + 2]
+            if initial.action == 'UP':
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    v_invcount = 2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    v_invcount = -2
+            else:
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    v_invcount = -2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    v_invcount = 2
+            node.v_invcount += v_invcount
+        if node.v_invcount == 0 and node.state[8] == 0:
+            returned_inversions = 0
+        else:
+            vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
+            horizontal_lowerbound = math.floor(node.h_invcount / 2) + node.h_invcount % 2
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+    return returned_inversions
 
-    # top-to-bottom, left-to-right fashion
-    new_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
-    new_node = []
-    for i in new_order:
-        new_node.append(node[i])
-    horizontal_inversions = 0
-    for i in range(9):
-        if new_node[i] == 0:
-            continue
-        for j in range(i + 1, 9):
-            if new_node[j] == 0:
-                continue
-            if new_node[j] < new_node[i]:
-                horizontal_inversions += 1
-    horizontal_lowerbound = math.floor(horizontal_inversions / 3) + horizontal_inversions % 3
 
-    # add horizontal lowerbound and vertical lowerbound
-    total_inversion_distance = math.floor(horizontal_lowerbound + vertical_lowerbound)
-
-    # TODO calculate change in version by using skipped row/column instead of recalculating the entire board
-    return total_inversion_distance
+def walking_distance(node):
+    return walking_distance_table[node.state]
 
 
 ##taken from textbook code
@@ -102,90 +149,85 @@ def max_heuristic(node):
     return max(mis_score, man_score)
 
 
-###Modifed Textbook code
-def best_first_graph_search(problem, f, display=False):
-    """Search the nodes with the lowest f scores first.
-    You specify the function f(node) that you want to minimize; for example,
-    if f is a heuristic estimate to the goal, then we have greedy best
-    first search; if f is node.depth then we have breadth-first search.
-    There is a subtlety: the line "f = memoize(f, 'f')" means that the f
-    values will be cached on the nodes as they are computed. So after doing
-    a best first search you can examine the f values of the path returned."""
-    f = memoize(f, 'f')
-    node = Node(problem.initial)
-    frontier = PriorityQueue('min', f)
-    frontier.append(node)
-    explored = set()
-    while frontier:
-        node = frontier.pop()
-        if problem.goal_test(node.state):
-            if display:
-                print("Nodes expanded: ", len(explored))
-            return node
-        explored.add(node.state)
-        for child in node.expand(problem):
-            if child.state not in explored and child not in frontier:
-                frontier.append(child)
-            elif child in frontier:
-                if f(child) < frontier[child]:
-                    del frontier[child]
-                    frontier.append(child)
-    return None
+""" 
+                                ---------------------------- 
+
+                        ---------------- Main Program ----------------
+
+                                ----------------------------
+
+"""
+
+if __name__ == "__main__":
+    print("\n\nCreating Walking Distance lookup table:")
+    # start_time = time.time()
+
+    # create_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
+    walking_distance_table = load_table_from_file('walking_distance_db.txt')
+    print(f'The Walking Distance lookup table has {len(walking_distance_table)} entries.\n\n')
+
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s\n\n')
+
+    puzzle = make_rand_8puzzle()
+    display(puzzle.initial)
 
 
-def astar_search(problem, h=None, display=True):
-    """A* search is best-first graph search with f(n) = g(n)+h(n).
-    You need to specify the h function when you call astar_search, or
-    else in your Problem subclass."""
-    h = memoize(h or problem.h, 'h')
-    return best_first_graph_search(problem, lambda n: n.path_cost + h(n), display)
+    ### misplaced-tiles
+    print("A* with misplaced-tiles heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, "", True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
 
-############################################# driver code
+    ### manhattan
+    print("\n\nA* with manhattan heuristic:")
+    start_time = time.time()
 
-puzzle = make_rand_8puzzle()
+    sol = astar_search(puzzle, manhattan, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
 
-# ##misplaced-tiles
-# print("A* with misplaced-tiles heuristic:")
-# start_time = time.time()
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
-# sol = astar_search(puzzle, "", True).solution()
-# print("Solution: ", sol)
-# print("Solution length: ", len(sol))
 
-# elapsed_time = time.time() - start_time
-# print(f'elapsed time (in seconds): {elapsed_time}s')
+    ## inversion
+    print("\n\nA* with inversion-distance heuristic:")
+    start_time = time.time()
 
-###manhattan
-print("\n\nA* with manhattan heuristic:")
-start_time = time.time()
+    sol = astar_search(puzzle, inversion, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
 
-# print(astar_search(puzzle,manhattan,True).state)
-sol = astar_search(puzzle, manhattan, True).solution()
-print("Solution: ", sol)
-print("Solution length: ", len(sol))
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
-elapsed_time = time.time() - start_time
-print(f'elapsed time (in seconds): {elapsed_time}s')
 
-## inversion
-print("\n\nA* with inversion-distance heuristic:")
-start_time = time.time()
+    ### walking distance
+    print("\n\nA* with walking distance heuristic:")
+    start_time = time.time()
 
-sol = astar_search(puzzle, inversion, True).solution()
-print("Solution: ", sol)
-print("Solution length: ", len(sol))
+    sol = astar_search(puzzle, walking_distance, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
 
-elapsed_time = time.time() - start_time
-print(f'elapsed time (in seconds): {elapsed_time}s')
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
 
-# ###Max-misplaced-manhattan
-# print("\n\nA* with max-misplaced-manhattan heuristic:")
-# start_time = time.time()
 
-# sol = astar_search(puzzle, max_heuristic, True).solution()
-# print("Solution: ", sol)
-# print("Solution length: ", len(sol))
-
-# elapsed_time = time.time() - start_time
-# print(f'elapsed time (in seconds): {elapsed_time}s')
+    # ###Max-misplaced-manhattan
+    # print("\n\nA* with max-misplaced-manhattan heuristic:")
+    # start_time = time.time()
+    #
+    # sol = astar_search(puzzle, max_heuristic, True).solution()
+    # print("Solution: ", sol)
+    # print("Solution length: ", len(sol))
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s')
