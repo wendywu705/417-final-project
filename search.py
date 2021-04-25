@@ -78,8 +78,8 @@ def breadth_first_tree_search(puzzle):
     while frontier:
         node = frontier.popleft()
         if puzzle.goal_test(node.state):
-            print(len(explored), "paths have been expanded and", len(frontier), "paths remain in the frontier")
-            print("Nodes expanded: ", len(explored))
+            # print(len(explored), "paths have been expanded and", len(frontier), "paths remain in the frontier")
+            # print("Nodes expanded: ", len(explored))
             return node
         explored.add(node.state)
         frontier.extend(node.expand(puzzle))

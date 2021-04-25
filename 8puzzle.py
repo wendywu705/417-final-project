@@ -1,3 +1,6 @@
+import ast
+from itertools import permutations
+
 from Puzzle import EightPuzzle
 from search import *
 import time
@@ -101,7 +104,7 @@ def inversion(node):
 
 
 def walking_distance(node):
-    return calculate_walking_distance(node)
+    return walking_distance_table[node.state]
 
 
 ##taken from textbook code
@@ -121,35 +124,37 @@ def max_heuristic(node):
 
 """
 
-
 if __name__ == "__main__":
+    print("\n\nCreating Walking Distance lookup table:")
+    # start_time = time.time()
+
+    # create_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
+    walking_distance_table = load_table_from_file('walking_distance_db.txt')
+    print(f'The Walking Distance lookup table has {len(walking_distance_table)} entries.\n\n')
+
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s\n\n')
+
     puzzle = make_rand_8puzzle()
     display(puzzle.initial)
 
-    # converted_row_puzzle = convert_to_walking_row_distance_state(puzzle)
-    # display_walking_distance_state(converted_row_puzzle)
-    #
-    # converted_column_puzzle = convert_to_walking_column_distance_state(puzzle)
-    # display_walking_distance_state(converted_column_puzzle)
 
-    print(calculate_walking_distance(Node(puzzle.initial)))
+    ### misplaced-tiles
+    print("A* with misplaced-tiles heuristic:")
+    start_time = time.time()
 
-    # ##misplaced-tiles
-    # print("A* with misplaced-tiles heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, "", True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
-    #
-    # ###manhattan
+    sol = astar_search(puzzle, "", True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
+
+
+    ### manhattan
     print("\n\nA* with manhattan heuristic:")
     start_time = time.time()
 
-    print(astar_search(puzzle,manhattan,True).state)
     sol = astar_search(puzzle, manhattan, True).solution()
     print("Solution: ", sol)
     print("Solution length: ", len(sol))
@@ -157,28 +162,30 @@ if __name__ == "__main__":
     elapsed_time = time.time() - start_time
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    # ## inversion
-    # print("\n\nA* with inversion-distance heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, inversion, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
-    #
-    # ### walking distance
+
+    ## inversion
+    print("\n\nA* with inversion-distance heuristic:")
+    start_time = time.time()
+
+    sol = astar_search(puzzle, inversion, True).solution()
+    print("Solution: ", sol)
+    print("Solution length: ", len(sol))
+
+    elapsed_time = time.time() - start_time
+    print(f'elapsed time (in seconds): {elapsed_time}s')
+
+
+    ### walking distance
     print("\n\nA* with walking distance heuristic:")
     start_time = time.time()
 
-    # print(astar_search(puzzle,manhattan,True).state)
     sol = astar_search(puzzle, walking_distance, True).solution()
     print("Solution: ", sol)
     print("Solution length: ", len(sol))
 
     elapsed_time = time.time() - start_time
     print(f'elapsed time (in seconds): {elapsed_time}s')
+
 
     # ###Max-misplaced-manhattan
     # print("\n\nA* with max-misplaced-manhattan heuristic:")

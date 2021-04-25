@@ -1,7 +1,125 @@
+import ast
+from itertools import permutations
+
 from Puzzle import Puzzle, EightPuzzle
 from search import *
 
-import time
+
+"""
+
+                                    -------------------------------- 
+
+                        ---------------- Generating WD Lookup Table ----------------
+
+                                    --------------------------------
+
+"""
+
+
+goal_position = {'A': 0, 'B': 1, 'C': 2}
+
+def manhanttan(node):
+    total_distance = 0
+    for i in range(9):
+        tile = node.state[i]
+        if (tile != '*'):
+            tile_goal_position = goal_position[tile]
+
+            tile_current_column = i % 3
+            horizontal_distance = abs(tile_current_column - tile_goal_position)
+
+            tile_current_row = i // 3
+            vertical_distance = abs(tile_current_row - tile_goal_position)
+
+            total_distance += horizontal_distance + vertical_distance
+    return total_distance
+
+
+def generate_all_solvable_8puzzles():
+    solvable = list()
+    states = list(permutations(range(0, 9)))
+
+    for state in states:
+        new_puzzle = EightPuzzle(state)
+        if new_puzzle.check_solvability(new_puzzle.initial):
+            solvable.append(state)
+
+    return solvable
+
+
+def load_table_from_file(filename):
+    with open(filename) as file:
+        data = file.read()
+    new_dict = ast.literal_eval(data)
+    return new_dict
+
+
+def create_walking_distance_table():
+    def write_table_to_file(filename, table):
+        try:
+            table_file = open(filename, 'wt')
+            table_file.write(str(table))
+            table_file.close()
+
+        except:
+            print("Unable to write table to file")
+
+
+    def save_wd_row_col_table(row_filename, col_filename):
+        states = list(set(permutations(['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'])))
+        wd_row_table = {}
+        wd_col_table = {}
+
+        for state in states:
+            # print('Processing state ', states.index(state))
+            row_puzzle = WalkingRowDistance8Puzzle(state)
+            col_puzzle = WalkingColumnDistance8Puzzle(state)
+            # display_walking_distance_state(row_puzzle.initial)
+            # display_walking_distance_state(col_puzzle.initial)
+
+            row_distance = len(astar_search(row_puzzle, manhanttan, False).solution())
+            wd_row_table[state] = row_distance
+
+            col_distance = len(astar_search(col_puzzle, manhanttan, False).solution())
+            wd_col_table[state] = col_distance
+
+        write_table_to_file(row_filename, wd_row_table)
+        write_table_to_file(col_filename, wd_col_table)
+
+
+    def save_wd_full_table(wd_filename, row_filename, col_filename):
+        wd_table = {}
+        wd_row_table = load_table_from_file(row_filename)
+        wd_col_table = load_table_from_file(col_filename)
+        configurations = generate_all_solvable_8puzzles()
+
+        for configuration in configurations:
+            row_puzzle = WalkingRowDistance8Puzzle(convert_to_walking_row_distance_state(configuration))
+            col_puzzle = WalkingColumnDistance8Puzzle(convert_to_walking_column_distance_state(configuration))
+
+            row_distance = wd_row_table[row_puzzle.initial]
+            col_distance = wd_col_table[col_puzzle.initial]
+            wd_table[configuration] = row_distance + col_distance
+
+        write_table_to_file(wd_filename, wd_table)
+
+    # body of create_walking_distance_table()
+    row_file = 'row_distance_db.txt'
+    col_file = 'col_distance_db.txt'
+    wd_file = 'walking_distance_db.txt'
+    save_wd_row_col_table(row_file, col_file)
+    save_wd_full_table(wd_file, row_file, col_file)
+
+
+"""
+ 
+                                    -------------------------------- 
+
+                        ---------------- Utils/Helper Functions For Puzzles ----------------
+
+                                    --------------------------------
+
+"""
 
 
 def display_walking_distance_state(state):
@@ -44,25 +162,8 @@ def convert_to_walking_column_distance_state(state):
     return tuple(new_state)
 
 
-def calculate_walking_distance(node):
-    row_puzzle = WalkingRowDistance8Puzzle(convert_to_walking_row_distance_state(node.state))
-    column_puzzle = WalkingColumnDistance8Puzzle(convert_to_walking_column_distance_state(node.state))
+"""
 
-    display_walking_distance_state(row_puzzle.initial)
-    display_walking_distance_state(column_puzzle.initial)
-
-    print('Calculating row distance...')
-    row_distance = len(breadth_first_tree_search(row_puzzle).solution())
-    print('row_distance = ', row_distance)
-
-    print('Calculating column distance...')
-    column_distance = len(breadth_first_tree_search(column_puzzle).solution())
-    print('column_distance = ', column_distance)
-
-    return row_distance + column_distance
-
-
-""" 
                                 ---------------------------- 
 
                         ---------------- Row Distance ----------------
@@ -141,7 +242,6 @@ class WalkingRowDistance8Puzzle(Puzzle):
 
         # blank is the index of the blank square
         blank = self.find_blank_square(state)
-        blank_col = blank % 3
         new_state = list(state)
 
         delta = {'UP': -3, 'UP_RIGHT': -2, 'UP_RIGHTMOST': -1, 'UP_LEFT': -4, 'UP_LEFTMOST': -5,
@@ -156,16 +256,8 @@ class WalkingRowDistance8Puzzle(Puzzle):
 
         return state in self.goal
 
-    # def check_solvability(self, state):
-    #     """ Checks if the given state is solvable """
-    #
-    #     inversion = 0
-    #     for i in range(len(state)):
-    #         for j in range(i + 1, len(state)):
-    #             if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
-    #                 inversion += 1
-    #
-    #     return inversion % 2 == 0
+    def check_solvability(self, state):
+        return True     ## all configurations are solvable
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is
@@ -174,13 +266,14 @@ class WalkingRowDistance8Puzzle(Puzzle):
         return sum(s != g for (s, g) in zip(node.state, self.goal))
 
 
-""" 
+"""
+
                                 ---------------------------- 
 
                         ---------------- Column Distance ----------------
 
                                 ----------------------------
-
+                                
 """
 
 col_goals = [('A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', '*'),
@@ -253,7 +346,6 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
         # blank is the index of the blank square
         blank = self.find_blank_square(state)
-        blank_col = blank % 3
         new_state = list(state)
 
         delta = {'RIGHT': 1, 'RIGHT_UP': -2, 'RIGHT_UPMOST': -5, 'RIGHT_DOWN': 4, 'RIGHT_DOWNMOST': 7,
@@ -268,47 +360,11 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
         return state in self.goal
 
-    # def check_solvability(self, state):
-    #     """ Checks if the given state is solvable """
-    #
-    #     inversion = 0
-    #     for i in range(len(state)):
-    #         for j in range(i + 1, len(state)):
-    #             if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
-    #                 inversion += 1
-    #
-    #     return inversion % 2 == 0
+    def check_solvability(self, state):
+        return True     ## all configurations are solvable
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is
         h(n) = number of misplaced tiles """
 
         return sum(s != g for (s, g) in zip(node.state, self.goal))
-
-
-""" 
-                                ---------------------------- 
-
-                        ---------------- Main Program ----------------
-
-                                ----------------------------
-
-"""
-
-if __name__ == "__main__":
-    print("It shouldn't get in here!")
-    # row_puzzle = WalkingRowDistance8Puzzle(('A', 'C', 'B', 'A', '*', 'A', 'C', 'B', 'B'))
-    # display(row_puzzle.initial)
-
-    # col_puzzle = WalkingColumnDistance8Puzzle(('*', 'A', 'C', 'B', 'A', 'C', 'B', 'B', 'A'))
-    # display_walking_distance_state(col_puzzle.initial)
-
-    # print("\n\nBFS:")
-    # start_time = time.time()
-    #
-    # sol = breadth_first_tree_search(col_puzzle).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
