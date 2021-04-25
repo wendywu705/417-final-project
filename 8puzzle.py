@@ -1,10 +1,5 @@
-import ast
-from itertools import permutations
-
-from Puzzle import EightPuzzle
-from search import *
-import time
 import math
+import time
 
 from walking_distance import *
 

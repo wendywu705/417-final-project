@@ -17,7 +17,7 @@ from search import *
 goal_position = {'A': 0, 'B': 1, 'C': 2}
 
 
-def manhanttan(node):
+def manhanttan8(node):
     total_distance = 0
     for i in range(9):
         tile = node.state[i]
@@ -75,10 +75,10 @@ def create_walking_distance_table():
             # display_walking_distance_state(row_puzzle.initial)
             # display_walking_distance_state(col_puzzle.initial)
 
-            row_distance = len(astar_search(row_puzzle, manhanttan, False).solution())
+            row_distance = len(astar_search(row_puzzle, manhanttan8, False).solution())
             wd_row_table[state] = row_distance
 
-            col_distance = len(astar_search(col_puzzle, manhanttan, False).solution())
+            col_distance = len(astar_search(col_puzzle, manhanttan8, False).solution())
             wd_col_table[state] = col_distance
 
         write_table_to_file(row_filename, wd_row_table)
@@ -163,15 +163,15 @@ def convert_to_walking_column_distance_state(state):
 
                                 ---------------------------- 
 
-                        ---------------- Row Distance ----------------
+                ---------------- Row Distance For 8-Puzzle ----------------
 
                                 ----------------------------
 
 """
 
-row_goals = [('A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'),
-             ('A', 'A', 'A', 'B', 'B', 'B', 'C', '*', 'C'),
-             ('A', 'A', 'A', 'B', 'B', 'B', '*', 'C', 'C')]
+row_goals_8 = [('A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', '*'),
+               ('A', 'A', 'A', 'B', 'B', 'B', 'C', '*', 'C'),
+               ('A', 'A', 'A', 'B', 'B', 'B', '*', 'C', 'C')]
 
 
 class WalkingRowDistance8Puzzle(Puzzle):
@@ -180,7 +180,7 @@ class WalkingRowDistance8Puzzle(Puzzle):
     where element is A, B or C, where A, B and C represent the tiles at ROW 1, ROW 2 and ROW 3 respectively
     in the goal state of 8-puzzle (* if it's an empty square, i.e. tile 0 in 8-puzzle) """
 
-    def __init__(self, initial, goal=row_goals):
+    def __init__(self, initial, goal=row_goals_8):
         """ Define goal state and initialize a problem """
         super().__init__(initial, goal)
 
@@ -270,13 +270,13 @@ class WalkingRowDistance8Puzzle(Puzzle):
 
                                 ---------------------------- 
 
-                        ---------------- Column Distance ----------------
+                ---------------- Column Distance For 8-Puzzle ----------------
 
                                 ----------------------------
                                 
 """
 
-col_goals = [('A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', '*'),
+col_goals_8 = [('A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', '*'),
              ('A', 'B', 'C', 'A', 'B', '*', 'A', 'B', 'C'),
              ('A', 'B', '*', 'A', 'B', 'C', 'A', 'B', 'C')]
 
@@ -287,7 +287,7 @@ class WalkingColumnDistance8Puzzle(Puzzle):
     where element is A, B or C, where A, B and C represent the tiles at COLUMN 1, COLUMN 2 and COLUMN 3 respectively
     in the goal state of 8-puzzle (* if it's an empty square, i.e. tile 0 in 8-puzzle) """
 
-    def __init__(self, initial, goal=col_goals):
+    def __init__(self, initial, goal=col_goals_8):
         """ Define goal state and initialize a problem """
         super().__init__(initial, goal)
 
@@ -364,6 +364,263 @@ class WalkingColumnDistance8Puzzle(Puzzle):
 
     def check_solvability(self, state):
         return True  ## all configurations are solvable
+
+    def h(self, node):
+        """ Return the heuristic value for a given state. Default heuristic function used is
+        h(n) = number of misplaced tiles """
+
+        return sum(s != g for (s, g) in zip(node.state, self.goal))
+
+
+"""
+
+                                ---------------------------- 
+
+                ---------------- Row Distance For 15-Puzzle ----------------
+
+                                ----------------------------
+
+"""
+
+row_goals_15 = [('A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'D', 'D', 'D', '*'),
+                ('A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'D', 'D', '*', 'D'),
+                ('A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', 'D', '*', 'D', 'D'),
+                ('A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'C', 'C', 'C', 'C', '*', 'D', 'D', 'D')]
+
+
+class WalkingRowDistance15Puzzle(Puzzle):
+    """ The problem of sliding tiles on a 4x4 board, where one of the squares is a blank.
+    A state is the collapsed row version of a 15-puzzle configuration, represented as a tuple of length 16,
+    where element is A, B, C or D, where A, B, C and D represent the tiles at ROW 1, ROW 2, ROW 3 and ROW 4
+    respectively in the goal state of 15-puzzle (* if it's an empty square, i.e. tile 0 in 15-puzzle) """
+
+    def __init__(self, initial, goal=row_goals_15):
+        """ Define goal state and initialize a problem """
+        super().__init__(initial, goal)
+
+    def find_blank_square(self, state):
+        """Return the index of the blank square in a given state"""
+        return state.index('*')
+
+    def actions(self, state):
+        """ Return the actions that can be executed in the given state.
+        The result would be a list."""
+
+        possible_actions = ['UP', 'UP_RIGHT', 'UP_DOUBLE_RIGHT', 'UP_RIGHTMOST', 'UP_LEFT', 'UP_DOUBLE_LEFT', 'UP_LEFTMOST',
+                            'DOWN', 'DOWN_RIGHT', 'DOWN_DOUBLE_RIGHT', 'DOWN_RIGHTMOST', 'DOWN_LEFT', 'DOWN_DOUBLE_LEFT', 'DOWN_LEFTMOST']
+        index_blank_square = self.find_blank_square(state)
+
+        if index_blank_square < 4:
+            possible_actions.remove('UP')
+            possible_actions.remove('UP_RIGHT')
+            possible_actions.remove('UP_DOUBLE_RIGHT')
+            possible_actions.remove('UP_RIGHTMOST')
+            possible_actions.remove('UP_LEFT')
+            possible_actions.remove('UP_DOUBLE_LEFT')
+            possible_actions.remove('UP_LEFTMOST')
+
+        if index_blank_square > 11:
+            possible_actions.remove('DOWN')
+            possible_actions.remove('DOWN_RIGHT')
+            possible_actions.remove('DOWN_DOUBLE_RIGHT')
+            possible_actions.remove('DOWN_RIGHTMOST')
+            possible_actions.remove('DOWN_LEFT')
+            possible_actions.remove('DOWN_DOUBLE_LEFT')
+            possible_actions.remove('DOWN_LEFTMOST')
+
+        if index_blank_square % 4 == 0:
+            if index_blank_square >= 4:
+                possible_actions.remove('UP_LEFT')
+                possible_actions.remove('UP_DOUBLE_LEFT')
+                possible_actions.remove('UP_LEFTMOST')
+            if index_blank_square <= 11:
+                possible_actions.remove('DOWN_LEFT')
+                possible_actions.remove('DOWN_DOUBLE_LEFT')
+                possible_actions.remove('DOWN_LEFTMOST')
+
+        if index_blank_square % 4 == 1:
+            if index_blank_square >= 4:
+                possible_actions.remove('UP_RIGHTMOST')
+                possible_actions.remove('UP_DOUBLE_LEFT')
+                possible_actions.remove('UP_LEFTMOST')
+            if index_blank_square <= 11:
+                possible_actions.remove('DOWN_RIGHTMOST')
+                possible_actions.remove('DOWN_DOUBLE_LEFT')
+                possible_actions.remove('DOWN_LEFTMOST')
+
+        if index_blank_square % 4 == 2:
+            if index_blank_square >= 4:
+                possible_actions.remove('UP_DOUBLE_RIGHT')
+                possible_actions.remove('UP_RIGHTMOST')
+                possible_actions.remove('UP_LEFTMOST')
+            if index_blank_square <= 11:
+                possible_actions.remove('DOWN_DOUBLE_RIGHT')
+                possible_actions.remove('DOWN_RIGHTMOST')
+                possible_actions.remove('DOWN_LEFTMOST')
+
+        if index_blank_square % 4 == 3:
+            if index_blank_square >= 4:
+                possible_actions.remove('UP_RIGHT')
+                possible_actions.remove('UP_DOUBLE_RIGHT')
+                possible_actions.remove('UP_RIGHTMOST')
+            if index_blank_square <= 11:
+                possible_actions.remove('DOWN_RIGHT')
+                possible_actions.remove('DOWN_DOUBLE_RIGHT')
+                possible_actions.remove('DOWN_RIGHTMOST')
+
+        return possible_actions
+
+    def result(self, state, action):
+        """ Given state and action, return a new state that is the result of the action.
+        Action is assumed to be a valid action in the state. """
+
+        # blank is the index of the blank square
+        blank = self.find_blank_square(state)
+        new_state = list(state)
+
+        delta = {'UP': -4, 'UP_RIGHT': -3, 'UP_DOUBLE_RIGHT': -2, 'UP_RIGHTMOST': -1, 'UP_LEFT': -5, 'UP_DOUBLE_LEFT': -6, 'UP_LEFTMOST': -7,
+                'DOWN': 4, 'DOWN_RIGHT': 5,'DOWN_DOUBLE_RIGHT': 6, 'DOWN_RIGHTMOST': 7, 'DOWN_LEFT': 3, 'DOWN_DOUBLE_LEFT': 2, 'DOWN_LEFTMOST': 1}
+        target = blank + delta[action]
+        new_state[blank], new_state[target] = new_state[target], new_state[blank]
+
+        return tuple(new_state)
+
+    def goal_test(self, state):
+        """ Given a state, return True if state is a goal state or False, otherwise """
+
+        return state in self.goal
+
+    # def check_solvability(self, state):
+    #     return True  ## all configurations are solvable
+
+    def h(self, node):
+        """ Return the heuristic value for a given state. Default heuristic function used is
+        h(n) = number of misplaced tiles """
+
+        return sum(s != g for (s, g) in zip(node.state, self.goal))
+
+
+"""
+
+                                ---------------------------- 
+
+                ---------------- Column Distance For 15-Puzzle ----------------
+
+                                ----------------------------
+
+"""
+
+
+col_goals_15 = [('A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', '*'),
+                ('A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', '*', 'A', 'B', 'C', 'D'),
+                ('A', 'B', 'C', 'D', 'A', 'B', 'C', '*', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D'),
+                ('A', 'B', 'C', '*', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D')]
+
+
+class WalkingColumnDistance15Puzzle(Puzzle):
+    """ The problem of sliding tiles on a 4x4 board, where one of the squares is a blank.
+    A state is the collapsed row version of a 15-puzzle configuration, represented as a tuple of length 16,
+    where element is A, B, C or D, where A, B, C and D represent the tiles at COLUMN 1, COLUMN 2, COLUMN 3
+    and COLUMN 4 respectively in the goal state of 15-puzzle (* if it's an empty square, i.e. tile 0 in 15-puzzle) """
+
+    def __init__(self, initial, goal=col_goals_15):
+        """ Define goal state and initialize a problem """
+        super().__init__(initial, goal)
+
+    def find_blank_square(self, state):
+        """Return the index of the blank square in a given state"""
+        return state.index('*')
+
+    def actions(self, state):
+        """ Return the actions that can be executed in the given state.
+        The result would be a list."""
+
+        possible_actions = ['RIGHT', 'RIGHT_UP', 'RIGHT_DOUBLE_UP', 'RIGHT_UPMOST', 'RIGHT_DOWN', 'RIGHT_DOUBLE_DOWN', 'RIGHT_DOWNMOST',
+                            'LEFT', 'LEFT_UP', 'LEFT_DOUBLE_UP', 'LEFT_UPMOST', 'LEFT_DOWN', 'LEFT_DOUBLE_DOWN', 'LEFT_DOWNMOST']
+        index_blank_square = self.find_blank_square(state)
+
+        if index_blank_square % 4 == 0:
+            possible_actions.remove('LEFT')
+            possible_actions.remove('LEFT_UP')
+            possible_actions.remove('LEFT_DOUBLE_UP')
+            possible_actions.remove('LEFT_UPMOST')
+            possible_actions.remove('LEFT_DOWN')
+            possible_actions.remove('LEFT_DOUBLE_DOWN')
+            possible_actions.remove('LEFT_DOWNMOST')
+
+        if index_blank_square % 4 == 3:
+            possible_actions.remove('RIGHT')
+            possible_actions.remove('RIGHT_UP')
+            possible_actions.remove('RIGHT_DOUBLE_UP')
+            possible_actions.remove('RIGHT_UPMOST')
+            possible_actions.remove('RIGHT_DOWN')
+            possible_actions.remove('RIGHT_DOUBLE_DOWN')
+            possible_actions.remove('RIGHT_DOWNMOST')
+
+        if index_blank_square < 4:
+            if index_blank_square % 4 != 0:
+                possible_actions.remove('LEFT_UP')
+                possible_actions.remove('LEFT_DOUBLE_UP')
+                possible_actions.remove('LEFT_UPMOST')
+            if index_blank_square % 4 != 3:
+                possible_actions.remove('RIGHT_UP')
+                possible_actions.remove('RIGHT_DOUBLE_UP')
+                possible_actions.remove('RIGHT_UPMOST')
+
+        if 4 <= index_blank_square <= 7:
+            if index_blank_square % 4 != 0:
+                possible_actions.remove('LEFT_DOWNMOST')
+                possible_actions.remove('LEFT_DOUBLE_UP')
+                possible_actions.remove('LEFT_UPMOST')
+            if index_blank_square % 4 != 3:
+                possible_actions.remove('RIGHT_DOWNMOST')
+                possible_actions.remove('RIGHT_DOUBLE_UP')
+                possible_actions.remove('RIGHT_UPMOST')
+
+        if 8 <= index_blank_square <= 11:
+            if index_blank_square % 4 != 0:
+                possible_actions.remove('LEFT_DOUBLE_DOWN')
+                possible_actions.remove('LEFT_DOWNMOST')
+                possible_actions.remove('LEFT_UPMOST')
+            if index_blank_square % 4 != 3:
+                possible_actions.remove('RIGHT_DOUBLE_DOWN')
+                possible_actions.remove('RIGHT_DOWNMOST')
+                possible_actions.remove('RIGHT_UPMOST')
+
+        if index_blank_square > 11:
+            if index_blank_square % 4 != 0:
+                possible_actions.remove('LEFT_DOWN')
+                possible_actions.remove('LEFT_DOUBLE_DOWN')
+                possible_actions.remove('LEFT_DOWNMOST')
+            if index_blank_square % 4 != 3:
+                possible_actions.remove('RIGHT_DOWN')
+                possible_actions.remove('RIGHT_DOUBLE_DOWN')
+                possible_actions.remove('RIGHT_DOWNMOST')
+
+        return possible_actions
+
+    def result(self, state, action):
+        """ Given state and action, return a new state that is the result of the action.
+        Action is assumed to be a valid action in the state. """
+
+        # blank is the index of the blank square
+        blank = self.find_blank_square(state)
+        new_state = list(state)
+
+        delta = {'RIGHT': 1, 'RIGHT_UP': 3, 'RIGHT_DOUBLE_UP': 7, 'RIGHT_UPMOST': 11, 'RIGHT_DOWN': 5, 'RIGHT_DOUBLE_DOWN': 9, 'RIGHT_DOWNMOST': 13,
+                 'LEFT': -1, 'LEFT_UP': -5, 'LEFT_DOUBLE_UP': -9, 'LEFT_UPMOST': -13, 'LEFT_DOWN': 3, 'LEFT_DOUBLE_DOWN': 7, 'LEFT_DOWNMOST': 11}
+        target = blank + delta[action]
+        new_state[blank], new_state[target] = new_state[target], new_state[blank]
+
+        return tuple(new_state)
+
+    def goal_test(self, state):
+        """ Given a state, return True if state is a goal state or False, otherwise """
+
+        return state in self.goal
+
+    # def check_solvability(self, state):
+    #     return True  ## all configurations are solvable
 
     def h(self, node):
         """ Return the heuristic value for a given state. Default heuristic function used is
