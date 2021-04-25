@@ -1,101 +1,101 @@
 puzzle,solution,length of solution,time(s)
-"(0, 5, 3, 7, 1, 6, 2, 4, 8)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.00423121452331543
-"(2, 8, 0, 1, 3, 7, 5, 6, 4)","['LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",18,0.09518814086914062
-"(1, 5, 6, 7, 4, 3, 0, 2, 8)","['UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.0060422420501708984
-"(3, 4, 5, 7, 0, 8, 6, 1, 2)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",18,0.11330962181091309
-"(0, 2, 3, 6, 5, 8, 7, 1, 4)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",18,0.13806581497192383
-"(5, 1, 3, 2, 6, 8, 4, 7, 0)","['UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",10,0.00028824806213378906
-"(1, 2, 0, 6, 8, 3, 4, 7, 5)","['DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",10,0.00046539306640625
-"(1, 2, 5, 4, 6, 3, 0, 7, 8)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",12,0.0025970935821533203
-"(0, 2, 4, 1, 5, 3, 7, 8, 6)","['RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",10,0.0006897449493408203
-"(7, 3, 0, 5, 2, 6, 1, 4, 8)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.020215272903442383
-"(5, 2, 1, 4, 8, 3, 7, 6, 0)","['LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",16,0.020839214324951172
-"(3, 6, 8, 2, 0, 1, 7, 4, 5)","['RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",16,0.027583599090576172
-"(0, 1, 2, 7, 5, 4, 8, 6, 3)","['RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",12,0.0010869503021240234
-"(2, 6, 3, 1, 7, 8, 4, 5, 0)","['LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",12,0.0010390281677246094
-"(0, 5, 1, 2, 7, 3, 4, 8, 6)","['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.0038993358612060547
-"(2, 3, 5, 1, 8, 4, 7, 6, 0)","['LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",10,0.0004589557647705078
-"(1, 3, 6, 4, 0, 8, 7, 2, 5)","['DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",8,0.0002491474151611328
-"(1, 2, 6, 4, 0, 7, 3, 5, 8)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",20,1.088867425918579
-"(2, 3, 6, 1, 8, 5, 0, 7, 4)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.0068128108978271484
-"(2, 5, 3, 1, 0, 6, 4, 7, 8)","['UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",6,9.679794311523438e-05
-"(2, 4, 3, 1, 5, 6, 0, 7, 8)","['RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.00016808509826660156
-"(1, 2, 3, 8, 0, 5, 4, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",6,0.0001270771026611328
-"(4, 1, 3, 2, 6, 8, 0, 7, 5)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",10,0.0006585121154785156
-"(1, 5, 2, 4, 0, 3, 7, 8, 6)","['UP', 'RIGHT', 'DOWN', 'DOWN']",4,7.271766662597656e-05
-"(2, 1, 3, 4, 0, 5, 8, 7, 6)","['UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",20,1.496398687362671
-"(2, 4, 3, 7, 1, 6, 0, 5, 8)","['UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.00017881393432617188
-"(5, 1, 2, 4, 0, 3, 8, 7, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.008514404296875
-"(7, 4, 1, 5, 3, 6, 0, 8, 2)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",18,0.08091497421264648
-"(4, 3, 1, 5, 2, 6, 0, 7, 8)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",14,0.006606340408325195
-"(2, 4, 3, 1, 5, 6, 7, 8, 0)","['UP', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",8,0.00021839141845703125
-"(4, 1, 2, 8, 0, 3, 5, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",10,0.00043082237243652344
-"(2, 3, 0, 6, 4, 8, 1, 7, 5)","['LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.004033565521240234
-"(5, 4, 3, 1, 7, 6, 2, 8, 0)","['LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",16,0.02877020835876465
-"(4, 1, 0, 7, 5, 3, 8, 2, 6)","['DOWN', 'LEFT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",10,0.00039196014404296875
-"(4, 1, 2, 7, 5, 3, 8, 6, 0)","['LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",8,0.00011301040649414062
-"(8, 1, 2, 4, 0, 3, 7, 5, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",14,0.008721590042114258
-"(1, 5, 2, 7, 4, 8, 0, 6, 3)","['UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",10,0.0005276203155517578
-"(2, 8, 6, 1, 0, 7, 4, 5, 3)","['RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.18340849876403809
-"(4, 3, 0, 8, 1, 7, 2, 6, 5)","['LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",16,0.02588820457458496
-"(4, 8, 0, 5, 1, 2, 7, 3, 6)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",20,0.783034086227417
-"(4, 1, 3, 7, 0, 5, 8, 2, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",8,0.0002110004425048828
-"(1, 2, 3, 7, 0, 6, 5, 4, 8)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",6,0.00015044212341308594
-"(1, 3, 5, 8, 6, 7, 0, 4, 2)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",16,0.020000219345092773
-"(4, 1, 0, 6, 7, 2, 8, 5, 3)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",18,0.11013102531433105
-"(3, 7, 5, 1, 0, 2, 8, 4, 6)","['UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN']",14,0.005185365676879883
-"(4, 3, 8, 6, 1, 5, 2, 7, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",16,0.024052858352661133
-"(4, 1, 0, 5, 8, 2, 7, 6, 3)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",10,0.0003600120544433594
-"(4, 2, 0, 5, 1, 3, 7, 8, 6)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",8,0.00023436546325683594
-"(1, 3, 7, 4, 6, 2, 0, 5, 8)","['UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.1281752586364746
-"(1, 2, 0, 4, 6, 3, 7, 5, 8)","['DOWN', 'LEFT', 'DOWN', 'RIGHT']",4,7.295608520507812e-05
-"(4, 1, 3, 7, 2, 5, 0, 8, 6)","['UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,9.1552734375e-05
-"(3, 5, 6, 1, 2, 8, 4, 7, 0)","['UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.0036106109619140625
-"(1, 5, 0, 4, 3, 2, 7, 8, 6)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",6,0.0001327991485595703
-"(0, 1, 2, 6, 5, 8, 4, 7, 3)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",14,0.006624937057495117
-"(0, 5, 3, 2, 1, 6, 4, 7, 8)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",8,0.0001556873321533203
-"(2, 3, 0, 7, 4, 6, 1, 8, 5)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.026256799697875977
-"(1, 3, 5, 8, 7, 2, 4, 6, 0)","['LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",12,0.0011065006256103516
-"(3, 1, 5, 7, 2, 4, 0, 8, 6)","['UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",14,0.005788087844848633
-"(1, 3, 5, 7, 4, 8, 0, 6, 2)","['UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",12,0.00116729736328125
-"(0, 1, 2, 7, 5, 6, 3, 4, 8)","['RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",14,0.005939006805419922
-"(1, 3, 0, 2, 6, 5, 4, 7, 8)","['DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",12,0.00142669677734375
-"(7, 1, 3, 2, 4, 5, 0, 8, 6)","['RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN']",12,0.0012106895446777344
-"(6, 1, 2, 4, 0, 3, 5, 7, 8)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.2307436466217041
-"(1, 5, 2, 4, 3, 6, 7, 8, 0)","['UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",6,0.00011801719665527344
-"(1, 3, 6, 7, 5, 8, 4, 2, 0)","['UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",18,0.1710491180419922
-"(4, 1, 3, 2, 0, 5, 7, 8, 6)","['LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,0.0001571178436279297
-"(0, 1, 8, 4, 3, 2, 7, 6, 5)","['RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",12,0.0011529922485351562
-"(1, 8, 5, 4, 0, 2, 7, 6, 3)","['UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",10,0.0007345676422119141
-"(1, 3, 6, 4, 5, 2, 0, 7, 8)","['RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",8,0.0002238750457763672
-"(4, 1, 3, 7, 2, 5, 0, 8, 6)","['UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,9.036064147949219e-05
-"(7, 4, 1, 6, 3, 5, 0, 2, 8)","['RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",22,3.3871350288391113
-"(2, 8, 3, 4, 0, 6, 7, 5, 1)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",16,0.04076695442199707
-"(4, 2, 0, 8, 1, 3, 7, 6, 5)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",12,0.0011398792266845703
-"(4, 1, 2, 8, 3, 6, 5, 7, 0)","['UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",12,0.0013134479522705078
-"(1, 5, 6, 2, 3, 8, 4, 7, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.004996538162231445
-"(0, 2, 5, 1, 6, 3, 4, 7, 8)","['RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",10,0.0005464553833007812
-"(5, 7, 8, 1, 0, 2, 4, 6, 3)","['UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",16,0.02371382713317871
-"(1, 8, 2, 3, 0, 5, 4, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",14,0.00828242301940918
-"(1, 2, 3, 7, 0, 6, 5, 4, 8)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",6,0.0001475811004638672
-"(1, 2, 3, 4, 0, 8, 7, 6, 5)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",6,0.00016021728515625
-"(5, 4, 1, 8, 0, 6, 7, 3, 2)","['RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",18,0.1834428310394287
-"(7, 1, 4, 8, 2, 6, 3, 5, 0)","['UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",22,3.3948986530303955
-"(2, 5, 3, 7, 0, 6, 1, 4, 8)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",10,0.0005588531494140625
-"(2, 3, 0, 4, 1, 8, 7, 5, 6)","['DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.1531221866607666
-"(2, 6, 8, 5, 3, 7, 1, 4, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.012560367584228516
-"(2, 3, 6, 7, 1, 8, 0, 4, 5)","['UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",12,0.001003265380859375
-"(0, 6, 8, 1, 3, 5, 7, 2, 4)","['DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",20,0.6917681694030762
-"(2, 3, 0, 1, 8, 5, 4, 7, 6)","['LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",8,0.00011777877807617188
-"(1, 7, 2, 5, 8, 3, 0, 4, 6)","['RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",12,0.0012059211730957031
-"(1, 6, 2, 4, 5, 3, 0, 7, 8)","['RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT']",8,0.00018095970153808594
-"(4, 5, 2, 7, 0, 1, 8, 3, 6)","['RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",16,0.03391575813293457
-"(7, 5, 0, 3, 1, 6, 4, 8, 2)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",22,4.0737464427948
-"(1, 2, 3, 6, 0, 8, 4, 7, 5)","['LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",8,0.0002589225769042969
-"(1, 2, 3, 7, 6, 5, 0, 4, 8)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",16,0.053160905838012695
-"(2, 3, 0, 1, 5, 8, 4, 6, 7)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",12,0.0009288787841796875
-"(1, 2, 3, 5, 7, 6, 4, 8, 0)","['LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",6,0.00010704994201660156
-"(2, 4, 0, 1, 6, 3, 7, 5, 8)","['DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.0001552104949951172
-"(1, 3, 0, 4, 2, 5, 7, 8, 6)","['LEFT', 'DOWN', 'RIGHT', 'DOWN']",4,7.104873657226562e-05
-"(6, 1, 4, 2, 0, 3, 7, 5, 8)","['UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.008821249008178711
-"(7, 1, 0, 5, 8, 3, 4, 6, 2)","['DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",18,0.10609841346740723
+"(0, 5, 3, 7, 1, 6, 2, 4, 8)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.0
+"(2, 8, 0, 1, 3, 7, 5, 6, 4)","['LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",18,0.1875324249267578
+"(1, 5, 6, 7, 4, 3, 0, 2, 8)","['UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.015624284744262695
+"(3, 4, 5, 7, 0, 8, 6, 1, 2)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",18,0.17068886756896973
+"(0, 2, 3, 6, 5, 8, 7, 1, 4)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",18,0.21875429153442383
+"(5, 1, 3, 2, 6, 8, 4, 7, 0)","['UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",10,0.0
+"(1, 2, 0, 6, 8, 3, 4, 7, 5)","['DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",10,0.015624046325683594
+"(1, 2, 5, 4, 6, 3, 0, 7, 8)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",12,0.015626907348632812
+"(0, 2, 4, 1, 5, 3, 7, 8, 6)","['RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",10,0.015636444091796875
+"(7, 3, 0, 5, 2, 6, 1, 4, 8)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.04685378074645996
+"(5, 2, 1, 4, 8, 3, 7, 6, 0)","['LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",16,0.031247615814208984
+"(3, 6, 8, 2, 0, 1, 7, 4, 5)","['RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",16,0.04691028594970703
+"(0, 1, 2, 7, 5, 4, 8, 6, 3)","['RIGHT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",12,0.015584468841552734
+"(2, 6, 3, 1, 7, 8, 4, 5, 0)","['LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",12,0.0
+"(0, 5, 1, 2, 7, 3, 4, 8, 6)","['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.015623331069946289
+"(2, 3, 5, 1, 8, 4, 7, 6, 0)","['LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",10,0.0
+"(1, 3, 6, 4, 0, 8, 7, 2, 5)","['DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",8,0.0
+"(1, 2, 6, 4, 0, 7, 3, 5, 8)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",20,1.7067310810089111
+"(2, 3, 6, 1, 8, 5, 0, 7, 4)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.01562190055847168
+"(2, 5, 3, 1, 0, 6, 4, 7, 8)","['UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",6,0.0
+"(2, 4, 3, 1, 5, 6, 0, 7, 8)","['RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.015624046325683594
+"(1, 2, 3, 8, 0, 5, 4, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",6,0.0
+"(4, 1, 3, 2, 6, 8, 0, 7, 5)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",10,0.0
+"(1, 5, 2, 4, 0, 3, 7, 8, 6)","['UP', 'RIGHT', 'DOWN', 'DOWN']",4,0.0
+"(2, 1, 3, 4, 0, 5, 8, 7, 6)","['UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",20,2.3594133853912354
+"(2, 4, 3, 7, 1, 6, 0, 5, 8)","['UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.0
+"(5, 1, 2, 4, 0, 3, 8, 7, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",14,0.015625476837158203
+"(7, 4, 1, 5, 3, 6, 0, 8, 2)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",18,0.12745189666748047
+"(4, 3, 1, 5, 2, 6, 0, 7, 8)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",14,0.01566338539123535
+"(2, 4, 3, 1, 5, 6, 7, 8, 0)","['UP', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",8,0.0
+"(4, 1, 2, 8, 0, 3, 5, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",10,0.0
+"(2, 3, 0, 6, 4, 8, 1, 7, 5)","['LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.0
+"(5, 4, 3, 1, 7, 6, 2, 8, 0)","['LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",16,0.06253385543823242
+"(4, 1, 0, 7, 5, 3, 8, 2, 6)","['DOWN', 'LEFT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",10,0.0
+"(4, 1, 2, 7, 5, 3, 8, 6, 0)","['LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",8,0.0
+"(8, 1, 2, 4, 0, 3, 7, 5, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",14,0.01562356948852539
+"(1, 5, 2, 7, 4, 8, 0, 6, 3)","['UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",10,0.0
+"(2, 8, 6, 1, 0, 7, 4, 5, 3)","['RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.32814836502075195
+"(4, 3, 0, 8, 1, 7, 2, 6, 5)","['LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",16,0.031248807907104492
+"(4, 8, 0, 5, 1, 2, 7, 3, 6)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",20,1.2812929153442383
+"(4, 1, 3, 7, 0, 5, 8, 2, 6)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",8,0.0
+"(1, 2, 3, 7, 0, 6, 5, 4, 8)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",6,0.0
+"(1, 3, 5, 8, 6, 7, 0, 4, 2)","['RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",16,0.04691457748413086
+"(4, 1, 0, 6, 7, 2, 8, 5, 3)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",18,0.17191195487976074
+"(3, 7, 5, 1, 0, 2, 8, 4, 6)","['UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN']",14,0.015624761581420898
+"(4, 3, 8, 6, 1, 5, 2, 7, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT']",16,0.04687905311584473
+"(4, 1, 0, 5, 8, 2, 7, 6, 3)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",10,0.0
+"(4, 2, 0, 5, 1, 3, 7, 8, 6)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",8,0.0
+"(1, 3, 7, 4, 6, 2, 0, 5, 8)","['UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.21879005432128906
+"(1, 2, 0, 4, 6, 3, 7, 5, 8)","['DOWN', 'LEFT', 'DOWN', 'RIGHT']",4,0.0
+"(4, 1, 3, 7, 2, 5, 0, 8, 6)","['UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,0.0
+"(3, 5, 6, 1, 2, 8, 4, 7, 0)","['UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.0
+"(1, 5, 0, 4, 3, 2, 7, 8, 6)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",6,0.0
+"(0, 1, 2, 6, 5, 8, 4, 7, 3)","['RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",14,0.015624046325683594
+"(0, 5, 3, 2, 1, 6, 4, 7, 8)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",8,0.0
+"(2, 3, 0, 7, 4, 6, 1, 8, 5)","['DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.06253504753112793
+"(1, 3, 5, 8, 7, 2, 4, 6, 0)","['LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",12,0.015625
+"(3, 1, 5, 7, 2, 4, 0, 8, 6)","['UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",14,0.015625476837158203
+"(1, 3, 5, 7, 4, 8, 0, 6, 2)","['UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",12,0.0
+"(0, 1, 2, 7, 5, 6, 3, 4, 8)","['RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",14,0.015625953674316406
+"(1, 3, 0, 2, 6, 5, 4, 7, 8)","['DOWN', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",12,0.0
+"(7, 1, 3, 2, 4, 5, 0, 8, 6)","['RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN']",12,0.0
+"(6, 1, 2, 4, 0, 3, 5, 7, 8)","['DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.4219167232513428
+"(1, 5, 2, 4, 3, 6, 7, 8, 0)","['UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN']",6,0.0
+"(1, 3, 6, 7, 5, 8, 4, 2, 0)","['UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",18,0.31253862380981445
+"(4, 1, 3, 2, 0, 5, 7, 8, 6)","['LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,0.015589237213134766
+"(0, 1, 8, 4, 3, 2, 7, 6, 5)","['RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",12,0.0
+"(1, 8, 5, 4, 0, 2, 7, 6, 3)","['UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",10,0.0
+"(1, 3, 6, 4, 5, 2, 0, 7, 8)","['RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",8,0.0
+"(4, 1, 3, 7, 2, 5, 0, 8, 6)","['UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'DOWN']",6,0.0
+"(7, 4, 1, 6, 3, 5, 0, 2, 8)","['RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",22,5.735018730163574
+"(2, 8, 3, 4, 0, 6, 7, 5, 1)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",16,0.06253767013549805
+"(4, 2, 0, 8, 1, 3, 7, 6, 5)","['LEFT', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",12,0.0
+"(4, 1, 2, 8, 3, 6, 5, 7, 0)","['UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",12,0.0
+"(1, 5, 6, 2, 3, 8, 4, 7, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",14,0.0
+"(0, 2, 5, 1, 6, 3, 4, 7, 8)","['RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",10,0.0
+"(5, 7, 8, 1, 0, 2, 4, 6, 3)","['UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN']",16,0.04690980911254883
+"(1, 8, 2, 3, 0, 5, 4, 7, 6)","['LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN']",14,0.015625476837158203
+"(1, 2, 3, 7, 0, 6, 5, 4, 8)","['DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",6,0.0
+"(1, 2, 3, 4, 0, 8, 7, 6, 5)","['DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",6,0.0
+"(5, 4, 1, 8, 0, 6, 7, 3, 2)","['RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']",18,0.39062952995300293
+"(7, 1, 4, 8, 2, 6, 3, 5, 0)","['UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",22,6.173737525939941
+"(2, 5, 3, 7, 0, 6, 1, 4, 8)","['LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",10,0.0
+"(2, 3, 0, 4, 1, 8, 7, 5, 6)","['DOWN', 'DOWN', 'LEFT', 'LEFT', 'UP', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",18,0.2656230926513672
+"(2, 6, 8, 5, 3, 7, 1, 4, 0)","['UP', 'UP', 'LEFT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']",16,0.031249046325683594
+"(2, 3, 6, 7, 1, 8, 0, 4, 5)","['UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",12,0.0
+"(0, 6, 8, 1, 3, 5, 7, 2, 4)","['DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",20,1.2968745231628418
+"(2, 3, 0, 1, 8, 5, 4, 7, 6)","['LEFT', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN']",8,0.0
+"(1, 7, 2, 5, 8, 3, 0, 4, 6)","['RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",12,0.0
+"(1, 6, 2, 4, 5, 3, 0, 7, 8)","['RIGHT', 'UP', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT']",8,0.0
+"(4, 5, 2, 7, 0, 1, 8, 3, 6)","['RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN']",16,0.06250405311584473
+"(7, 5, 0, 3, 1, 6, 4, 8, 2)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'DOWN', 'RIGHT']",22,6.707211971282959
+"(1, 2, 3, 6, 0, 8, 4, 7, 5)","['LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT']",8,0.0
+"(1, 2, 3, 7, 6, 5, 0, 4, 8)","['UP', 'UP', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT', 'DOWN']",16,0.09377193450927734
+"(2, 3, 0, 1, 5, 8, 4, 6, 7)","['LEFT', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT', 'UP', 'LEFT', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",12,0.0
+"(1, 2, 3, 5, 7, 6, 4, 8, 0)","['LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'RIGHT']",6,0.0
+"(2, 4, 0, 1, 6, 3, 7, 5, 8)","['DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",8,0.015625953674316406
+"(1, 3, 0, 4, 2, 5, 7, 8, 6)","['LEFT', 'DOWN', 'RIGHT', 'DOWN']",4,0.0
+"(6, 1, 4, 2, 0, 3, 7, 5, 8)","['UP', 'LEFT', 'DOWN', 'RIGHT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'UP', 'LEFT', 'DOWN', 'RIGHT', 'DOWN', 'RIGHT']",14,0.015624284744262695
+"(7, 1, 0, 5, 8, 3, 4, 6, 2)","['DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'UP', 'UP', 'RIGHT', 'DOWN', 'DOWN', 'LEFT', 'UP', 'RIGHT', 'DOWN', 'RIGHT']",18,0.18749713897705078

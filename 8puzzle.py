@@ -4,7 +4,9 @@ from walking_dist.walking_distance import *
 import time
 import math
 
+
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
+
 
 def make_rand_8puzzle():
     found_solvable_puzzle = False
@@ -46,13 +48,19 @@ def misplaced(node):
 
 
 def manhattan(node):
-    goal = [1, 2, 3, 4, 5, 6, 7, 8, 0]
-    mhd = 0
-    for i in range(1, 9):
-        a = node.state.index(i)
-        b = goal.index(i)
-        mhd += (abs(a % 3 - b % 3) + abs(a // 3 - b // 3))
-    return mhd
+    total_distance = 0
+    for tile in node.state:
+        if (tile != 0):
+            tile_goal_column = (tile - 1) % 3
+            tile_current_column = node.state.index(tile) % 3
+            horizontal_distance = abs(tile_current_column - tile_goal_column)
+
+            tile_goal_row = (tile - 1) // 3
+            tile_current_row = node.state.index(tile) // 3
+            vertical_distance = abs(tile_current_row - tile_goal_row)
+
+            total_distance += horizontal_distance + vertical_distance
+    return total_distance
 
 
 def inversion(node):
@@ -169,8 +177,8 @@ if __name__ == "__main__":
     print("\n\nCreating Walking Distance lookup table:")
     # start_time = time.time()
 
-    # create_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
-    walking_distance_table = load_table_from_file('walking_dist/walking_distance_db.txt')
+    # create_8puzzle_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
+    walking_distance_table = load_table_from_file('walking_dist/walking_distance_db_8puzzle.txt')
     print(f'The Walking Distance lookup table has {len(walking_distance_table)} entries.\n\n')
 
     # elapsed_time = time.time() - start_time

@@ -1,11 +1,13 @@
 import csv
 
 from Puzzle import FifteenPuzzle
+from walking_dist.walking_distance import *
 from search import *
 import time
 import math
 import csv
 import random
+
 
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
@@ -173,7 +175,18 @@ def inversion(node):
     return returned_inversions
 
 
-##taken from textbook code
+def walking_distance(node):
+    '''
+    row_state = convert_to_15puzzle_row_distance_state(node.state)
+    row_distance = walking_distance_row_table[row_state]
+
+    col_state = convert_to_15puzzle_column_distance_state(node.state)
+    col_distance = walking_distance_col_table[col_state]
+    return row_distance + col_distance
+    '''
+
+
+## taken from textbook code
 def max_heuristic(node):
     mis_score = misplaced(node)
     man_score = manhattan(node)
@@ -231,6 +244,7 @@ def make_new(file_name):
 
 """
 
+
 if __name__ == "__main__":
     print("\n\nCreating PDB lookup table...")
     with open("fringe_pdb/database1-5.txt", 'r') as db1:
@@ -263,6 +277,16 @@ if __name__ == "__main__":
         t = eval(k)
         line3dict[t[0]] = t[1]
     lines3 = line3dict
+
+    # print("\n\nCreating Walking Distance lookup table:")
+    # start_time = time.time()
+    #
+    # create_15puzzle_walking_distance_table()  ## only need to run this for the first time to generate the lookup files
+    # walking_distance_row_table = load_table_from_file('row_distance_db_15puzzle.txt')
+    # walking_distance_col_table = load_table_from_file('col_distance_db_15puzzle.txt')
+    #
+    # elapsed_time = time.time() - start_time
+    # print(f'elapsed time (in seconds): {elapsed_time}s\n\n')
 
     puzzles = []
     file = open(sys.argv[1])
@@ -311,6 +335,20 @@ if __name__ == "__main__":
         print(f'elapsed time (in seconds): {elapsed_time}s')
 
         append_row('results15/inversion.csv', [line, sol, len(sol), elapsed_time])
+
+        ## walking distance
+        # print("\n\nA* with walking distance heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, walking_distance, True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # inversion_time += elapsed_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
+
+        # append_row('results15/walking_dist.csv', [line, sol, len(sol), elapsed_time])
 
         # FUll PDB
         print("\n\nA* with fringe pdb heuristic:")
