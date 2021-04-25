@@ -1,5 +1,3 @@
-from utils import is_in
-
 
 class Puzzle:
     """The abstract class for a formal problem. You should subclass
@@ -33,7 +31,7 @@ class Puzzle:
         list, as specified in the constructor. Override this method if
         checking against a single self.goal is not enough."""
         if isinstance(self.goal, list):
-            return is_in(state, self.goal)
+            return any(x is state for x in self.goal)
         else:
             return state == self.goal
 

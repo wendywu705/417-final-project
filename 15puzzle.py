@@ -3,8 +3,8 @@ from search import *
 import time
 import math
 import csv
+import random
 
-N = 4
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
 
@@ -27,7 +27,7 @@ def display(state):
         else:
             print(num, end=" ")
         cnt += 1
-        if cnt % N == 0:
+        if cnt % 4 == 0:
             print(end="\n")
     print()
 

@@ -1,10 +1,10 @@
 import csv
+import random
 from walking_dist.walking_distance import *
 import time
 import math
 
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
-
 
 def make_rand_8puzzle():
     found_solvable_puzzle = False
