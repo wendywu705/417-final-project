@@ -63,46 +63,110 @@ def manhattan(node):
 
 
 def inversion(node):
-    node = node.state
-    # left-to-right, top-to-bottom fashion
-    vertical_inversions = 0
-    for i in range(N * N):
-        if node[i] == 0:
-            continue
-        for j in range(i + 1, N * N):
-            if node[j] == 0:
-                continue
-            if node[j] < node[i]:
-                vertical_inversions += 1
-    vertical_lowerbound = math.floor(vertical_inversions / N) + vertical_inversions % N
-
-    # top-to-bottom, left-to-right fashion
-    # new_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
-    new_order = []
-    prev = 1
-    for i in range(N):
-        for j in range(i, N * N, N):
-            new_order.append(j)
-
-    new_node = []
-    for i in new_order:
-        new_node.append(node[i])
-    horizontal_inversions = 0
-    for i in range(N):
-        if new_node[i] == 0:
-            continue
-        for j in range(i + 1, N):
-            if new_node[j] == 0:
-                continue
-            if new_node[j] < new_node[i]:
-                horizontal_inversions += 1
-    horizontal_lowerbound = math.floor(horizontal_inversions / N) + horizontal_inversions % N
-
-    # add horizontal lowerbound and vertical lowerbound
-    total_inversion_distance = math.floor(horizontal_lowerbound + vertical_lowerbound)
-
-    # TODO calculate change in version by using skipped row/column instead of recalculating the entire board
-    return total_inversion_distance
+    initial = node
+    state = node.state
+    transpose_order = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15]
+    transposed_node = []
+    transposed_initial = []
+    for i in transpose_order:
+        if initial.parent:
+            transposed_initial.append(initial.parent.state[i])
+        transposed_node.append(state[i])
+    if initial.parent is None:
+        v_invcount = 0
+        h_invcount = 0
+        for i in range(len(state) - 1):
+            for j in range(i + 1, len(state)):
+                if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
+                    v_invcount += 1
+                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
+                    h_invcount += 1
+        vertical_lowerbound = math.floor(v_invcount / 3) + v_invcount % 3
+        horizontal_lowerbound = math.floor(h_invcount / 3) + h_invcount % 3
+        returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
+    else:
+        v_invcount = 0
+        h_invcount = 0
+        prev_blank = initial.parent.state.index(0)
+        new_blank = state.index(0)
+        moved_tile = state[prev_blank]
+        # horizontal
+        if initial.action == 'LEFT' or initial.action == 'RIGHT':
+            prev_blank = transposed_initial.index(0)
+            new_blank = transposed_node.index(0)
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = transposed_node[smaller + 1]
+            between_tile2 = transposed_node[smaller + 2]
+            between_tile3 = transposed_node[smaller + 3]
+            tiles = [between_tile1, between_tile2, between_tile3]
+            bigger_tiles = 0
+            smaller_tiles = 0
+            for tile in tiles:
+                if tile > moved_tile:
+                    bigger_tiles += 1
+                else:
+                    smaller_tiles += 1
+            if initial.action == 'RIGHT':
+                if smaller_tiles == 3:
+                    h_invcount = 3
+                elif bigger_tiles == 3:
+                    h_invcount = -3
+                elif bigger_tiles == 2 and smaller_tiles == 1:
+                    h_invcount = -1
+                elif bigger_tiles == 1 and smaller_tiles == 2:
+                    h_invcount = 1
+            else:
+                if smaller_tiles == 3:
+                    h_invcount = -3
+                elif bigger_tiles == 3:
+                    h_invcount = 3
+                elif bigger_tiles == 2 and smaller_tiles == 1:
+                    h_invcount = 1
+                elif bigger_tiles == 1 and smaller_tiles == 2:
+                    h_invcount = -1
+            node.h_invcount += h_invcount
+        # vertical
+        else:
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = state[smaller + 1]
+            between_tile2 = state[smaller + 2]
+            between_tile3 = state[smaller + 3]
+            tiles = [between_tile1, between_tile2, between_tile3]
+            bigger_tiles = 0
+            smaller_tiles = 0
+            for tile in tiles:
+                if tile > moved_tile:
+                    bigger_tiles += 1
+                else:
+                    smaller_tiles += 1
+            if initial.action == 'UP':
+                if smaller_tiles == 3:
+                    v_invcount = -3
+                elif bigger_tiles == 3:
+                    v_invcount = 3
+                elif bigger_tiles == 2 and smaller_tiles == 1:
+                    v_invcount = 1
+                elif bigger_tiles == 1 and smaller_tiles == 2:
+                    v_invcount = -1
+            else:
+                if smaller_tiles == 3:
+                    v_invcount = 3
+                elif bigger_tiles == 3:
+                    v_invcount = -3
+                elif bigger_tiles == 2 and smaller_tiles == 1:
+                    v_invcount = -1
+                elif bigger_tiles == 1 and smaller_tiles == 2:
+                    v_invcount = 1
+            node.v_invcount += v_invcount
+        if node.v_invcount == 0 and node.state[15] == 0:
+            returned_inversions = 0
+        else:
+            vertical_lowerbound = math.floor(node.v_invcount / 3) + node.v_invcount % 3
+            horizontal_lowerbound = math.floor(node.h_invcount / 3) + node.h_invcount % 3
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+    return returned_inversions
 
 
 ##taken from textbook code
@@ -125,54 +189,77 @@ def max_heuristic(node):
 
 if __name__ == "__main__":
     # puzzle = FifteenPuzzle((6, 3, 4, 8, 2, 1, 7, 12, 5, 10, 15, 14, 9, 13, 0, 11))
-    puzzle = FifteenPuzzle((2, 10, 6, 4, 3, 0, 5, 7, 11, 9, 1, 8, 13, 14, 15, 12))
-    # puzzle = make_rand_15puzzle()
-    display(puzzle.initial)
-    print('solvability = ', puzzle.check_solvability(puzzle.initial))
-    print()
+    # puzzle = FifteenPuzzle((1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15))
+    puzzles = []
+    file = open("generated15.txt")
+    Lines = file.readlines()
+    for line in Lines:
+        puzzles.append(eval(line.strip()))
 
-    ##misplaced-tiles
-    # print("A* with misplaced-tiles heuristic:")
-    # start_time = time.time()
-    #
-    # sol = astar_search(puzzle, "", True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    total_start = time.time()
+    misplaced_time = 0
+    mhd_time = 0
+    inversion_time = 0
 
-    ###manhattan
-    # print("\n\nA* with manhattan heuristic:")
-    # start_time = time.time()
-    #
-    # # print(astar_search(puzzle,manhattan,True).state)
-    # # print(manhattan(Node(puzzle.initial)))
-    # sol = astar_search(puzzle, manhattan, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+    for line in puzzles:
+        puzzle = FifteenPuzzle(line)
+        display(puzzle.initial)
+        ##misplaced-tiles
+        print("A* with misplaced-tiles heuristic:")
+        start_time = time.time()
 
-    ## inversion
-    print("\n\nA* with inversion-distance heuristic:")
-    start_time = time.time()
+        sol = astar_search(puzzle, "", True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
 
-    sol = astar_search(puzzle, inversion, True).solution()
-    print("Solution: ", sol)
-    print("Solution length: ", len(sol))
+        elapsed_time = time.time() - start_time
+        misplaced_time += elapsed_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
 
-    elapsed_time = time.time() - start_time
-    print(f'elapsed time (in seconds): {elapsed_time}s')
+        ###manhattan
+        print("\n\nA* with manhattan heuristic:")
+        start_time = time.time()
 
-    ###Max-misplaced-manhattan
-    # print("\n\nA* with max-misplaced-manhattan heuristic:")
-    # start_time = time.time()
+        sol = astar_search(puzzle, manhattan, True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
 
-    sol = astar_search(puzzle, max_heuristic, True).solution()
-    # print("Solution: ", sol)
-    # print("Solution length: ", len(sol))
-    #
-    # elapsed_time = time.time() - start_time
-    # print(f'elapsed time (in seconds): {elapsed_time}s')
+        elapsed_time = time.time() - start_time
+        mhd_time += elapsed_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
+
+        ## inversion
+        print("\n\nA* with inversion-distance heuristic:")
+        start_time = time.time()
+
+        sol = astar_search(puzzle, inversion, True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
+
+        elapsed_time = time.time() - start_time
+        inversion_time += elapsed_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
+
+        ###Max-misplaced-manhattan
+        # print("\n\nA* with max-misplaced-manhattan heuristic:")
+        # start_time = time.time()
+        #
+        # sol = astar_search(puzzle, max_heuristic, True).solution()
+        # print("Solution: ", sol)
+        # print("Solution length: ", len(sol))
+        #
+        # elapsed_time = time.time() - start_time
+        # print(f'elapsed time (in seconds): {elapsed_time}s')
+
+    total_time = time.time() - total_start
+    print("\nAll 5000 puzzles:")
+    print(f'elapsed time (in seconds): {total_time}s')
+
+    print("\nAll puzzles w/ Misplaced Distance:")
+    print(f'elapsed time (in seconds): {misplaced_time}s')
+
+    print("\nAll puzzles w/ Manhattan Distance:")
+    print(f'elapsed time (in seconds): {mhd_time}s')
+
+    print("\nAll puzzles w/ Inversion Distance:")
+    print(f'elapsed time (in seconds): {inversion_time}s')

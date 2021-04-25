@@ -67,40 +67,74 @@ def manhattan(node):
 
 
 def inversion(node):
-    node = node.state
-    # left-to-right, top-to-bottom fashion
-    vertical_inversions = 0
-    for i in range(9):
-        if node[i] == 0:
-            continue
-        for j in range(i + 1, 9):
-            if node[j] == 0:
-                continue
-            if node[j] < node[i]:
-                vertical_inversions += 1
-    vertical_lowerbound = math.floor(vertical_inversions / 3) + vertical_inversions % 3
-
-    # top-to-bottom, left-to-right fashion
-    new_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
-    new_node = []
-    for i in new_order:
-        new_node.append(node[i])
-    horizontal_inversions = 0
-    for i in range(9):
-        if new_node[i] == 0:
-            continue
-        for j in range(i + 1, 9):
-            if new_node[j] == 0:
-                continue
-            if new_node[j] < new_node[i]:
-                horizontal_inversions += 1
-    horizontal_lowerbound = math.floor(horizontal_inversions / 3) + horizontal_inversions % 3
-
-    # add horizontal lowerbound and vertical lowerbound
-    total_inversion_distance = math.floor(horizontal_lowerbound + vertical_lowerbound)
-
-    # TODO calculate change in version by using skipped row/column instead of recalculating the entire board
-    return total_inversion_distance
+    initial = node
+    state = node.state
+    transpose_order = [0, 3, 6, 1, 4, 7, 2, 5, 8]
+    transposed_node = []
+    transposed_initial = []
+    v_invcount = 0
+    h_invcount = 0
+    for i in transpose_order:
+        if initial.parent:
+            transposed_initial.append(initial.parent.state[i])
+        transposed_node.append(state[i])
+    if initial.parent is None:
+        for i in range(len(state) - 1):
+            for j in range(i + 1, len(state)):
+                if (state[i] > state[j]) and state[i] != 0 and state[j] != 0:
+                    v_invcount += 1
+                if (transposed_node[i] > transposed_node[j]) and transposed_node[i] != 0 and transposed_node[j] != 0:
+                    h_invcount += 1
+        vertical_lowerbound = math.floor(v_invcount / 2) + v_invcount % 2
+        horizontal_lowerbound = math.floor(h_invcount / 2) + h_invcount % 2
+        returned_inversions = vertical_lowerbound + horizontal_lowerbound
+        node.h_invcount = h_invcount
+        node.v_invcount = v_invcount
+    else:
+        prev_blank = initial.parent.state.index(0)
+        new_blank = state.index(0)
+        moved_tile = state[prev_blank]
+        # horizontal
+        if initial.action == 'LEFT' or initial.action == 'RIGHT':
+            prev_blank = transposed_initial.index(0)
+            new_blank = transposed_node.index(0)
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = transposed_node[smaller + 1]
+            between_tile2 = transposed_node[smaller + 2]
+            if initial.action == 'RIGHT':
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    h_invcount = -2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    h_invcount = 2
+            else:
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    h_invcount = 2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    h_invcount = -2
+            node.h_invcount += h_invcount
+        # vertical
+        else:
+            smaller = min(prev_blank, new_blank)
+            between_tile1 = state[smaller + 1]
+            between_tile2 = state[smaller + 2]
+            if initial.action == 'UP':
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    v_invcount = 2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    v_invcount = -2
+            else:
+                if between_tile1 > moved_tile and between_tile2 > moved_tile:
+                    v_invcount = -2
+                elif between_tile1 < moved_tile and between_tile2 < moved_tile:
+                    v_invcount = 2
+            node.v_invcount += v_invcount
+        if node.v_invcount == 0 and node.state[8] == 0:
+            returned_inversions = 0
+        else:
+            vertical_lowerbound = math.floor(node.v_invcount / 2) + node.v_invcount % 2
+            horizontal_lowerbound = math.floor(node.h_invcount / 2) + node.h_invcount % 2
+            returned_inversions = vertical_lowerbound + horizontal_lowerbound
+    return returned_inversions
 
 
 def walking_distance(node):

@@ -3,6 +3,7 @@ from collections import deque
 
 from utils import *
 
+
 class Node:
     """A node in a search tree. Contains a pointer to the parent (the node
     that this is a successor of) and to the actual state for this node. Note
@@ -20,7 +21,11 @@ class Node:
         self.action = action
         self.path_cost = path_cost
         self.depth = 0
+        self.v_invcount = 0
+        self.h_invcount = 0
         if parent:
+            self.v_invcount = parent.v_invcount
+            self.h_invcount = parent.h_invcount
             self.depth = parent.depth + 1
 
     def __repr__(self):
@@ -68,7 +73,7 @@ class Node:
         return hash(self.state)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 
 # modified textbook code
 def breadth_first_tree_search(puzzle):
@@ -196,3 +201,4 @@ def depth_search_with_threshold(problem, threshold):
 
     # Body of depth_search_with_threshold:
     return recursive_dst(Node(problem.initial), problem, threshold)
+
