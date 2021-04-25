@@ -3,10 +3,12 @@ from collections import *
 import json
 import math
 import time
+import itertools
+from typing import List
 
-goal_part61 = [1, 2, 3, 4, 5, 6, -1, -1,-1,-1,-1,-1,-1,-1,-1,0]
-goal_part62=[-1,-1,-1,-1,-1,-1,7,8,9,10,11,12,-1,-1,-1,0]
-goal_part3=[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,13,14,15,0]
+goal_part61 = [1, 2, 3, 4, 5, -1, -1, -1,-1,-1,-1,-1,-1,-1,-1,0]
+goal_part62=[-1,-1,-1,-1,-1,6,7,8,9,10,-1,-1,-1,-1,-1,0]
+goal_part3=[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,11,12,13,14,15,0]
 
 def getPossibleMoves(state):
     pos = state.index(0)
@@ -51,7 +53,16 @@ def applyMove(state,direction):
 
     return next_state
 
-def generatePart3Database():
+
+
+def accumulate(entries):
+    it = itertools.groupby(entries,lambda x:x[0])
+    for key, subiter in it:
+        yield key, min(k[1] for k in subiter)
+
+
+
+def generate11_15Database():
     start_time = time.time()
     start = goal_part3
     queue = deque([[start, 0]])
@@ -62,6 +73,7 @@ def generatePart3Database():
         state = state_cost[0]
         cost = state_cost[1]
         for m in getPossibleMoves(state):
+
             next_state = deepcopy(state)
             pos = state.index(0)
             # Position blank tile will move to.
@@ -72,7 +84,7 @@ def generatePart3Database():
                 cost+=1
 
             indices=[]
-            for k in range(13,16):
+            for k in range(11,16):
                 indices.append(next_state.index(k))
             next_state_cost = [next_state, cost]
 
@@ -87,20 +99,16 @@ def generatePart3Database():
         # print("Entries collected: " + str(len(entries)))
         
 
-        if len(entries) >= math.factorial(16)/math.factorial(16-4):
+        if len(entries) >= math.factorial(16)/math.factorial(16-6):
             print("break")
             break
     
-    entries=sorted(entries,key=lambda x:x[1])
-    finalEntries=set()
-    for k in entries:
-        result = next((i for i, v in enumerate(finalEntries) if v[0] == k[0]), None)
-        if result==None:
-            finalEntries.add(k)
+    
+    entries=sorted(entries,key=lambda x:x[0])
+    entries=list(accumulate(entries))
 
-    finalEntries = sorted(finalEntries,key=lambda x:x[1])
-    with open("database3.txt", "w") as f:
-        for entry in finalEntries:
+    with open("database11-15.txt", "w") as f:
+        for entry in sorted(entries,key=lambda x:x[1]):
             json.dump(entry, f)
             f.write("\n")
 
@@ -108,14 +116,12 @@ def generatePart3Database():
     print("3 database generated")
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
-def generateFirstPart6Database():
+def generate1_5Database():
     start_time = time.time()
     start = goal_part61
     queue = deque([[start, 0]])
     visited = set()
     entries = set()
-    entries.add((",".join(str(t) for t in start),0))
-    visited.add(",".join(str(t) for t in start))
     while queue:
         state_cost = queue.popleft()
         state = state_cost[0]
@@ -131,38 +137,30 @@ def generateFirstPart6Database():
             next_state_cost = [next_state, cost]
 
             indices=[]
-            for k in range(1,7):
+            for k in range(1,6):
                 indices.append(next_state.index(k))
             next_state_cost = [next_state, cost]
 
             
             entry = ",".join(str(t) for t in indices)
             state_entry = ",".join(str(t) for t in next_state)
-            if not entry in visited:
+            if not state_entry in visited:
                 queue.append(next_state_cost)
                 entries.add((entry,cost))
                 visited.add(state_entry)
-        
         # if len(entries) % 10000 == 0:
-        #     print("Entries collected: " + str(len(entries)))
+        # print("Entries collected: " + str(len(entries)))
         
-        if len(entries) >= math.factorial(16)/math.factorial(16-7):
-            print("breaking")
+
+        if len(entries) >= math.factorial(16)/math.factorial(16-6):
+            print("break")
             break
     
-    print("checking dups")
-    entries=sorted(entries,key=lambda x:x[1])
-    finalEntries=set()
-    for k in entries:
-        result = next((i for i, v in enumerate(finalEntries) if v[0] == k[0]), None)
-        if result==None:
-            finalEntries.add(k)
-
-    print("sorting")
-    finalEntries = sorted(finalEntries,key=lambda x:x[1])
-    print("writing")
-    with open("database3.txt", "w") as f:
-        for entry in finalEntries:
+    
+    entries=sorted(entries,key=lambda x:x[0])
+    entries=list(accumulate(entries))
+    with open("database1-5.txt", "w") as f:
+        for entry in sorted(entries,key=lambda x:x[1]):
             json.dump(entry, f)
             f.write("\n")
 
@@ -170,7 +168,7 @@ def generateFirstPart6Database():
     print("First 6 database generated")
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
-def generateSecondPart6Database():
+def generate6_10Database():
     start_time = time.time()
     start = goal_part62
     queue = deque([[start, 0]])
@@ -191,38 +189,38 @@ def generateSecondPart6Database():
             next_state_cost = [next_state, cost]
 
             indices=[]
-            for k in range(8,13):
+            for k in range(6,11):
                 indices.append(next_state.index(k))
             next_state_cost = [next_state, cost]
 
             
             entry = ",".join(str(t) for t in indices)
             state_entry = ",".join(str(t) for t in next_state)
-            result = next((i for i, v in enumerate(entries) if v[0] == entry), None)
             if not state_entry in visited:
                 queue.append(next_state_cost)
-                if(result==None):
-                    entries.add((entry,cost))
+                entries.add((entry,cost))
                 visited.add(state_entry)
-        
         # if len(entries) % 10000 == 0:
-        #     print("Entries collected: " + str(len(entries)))
+        # print("Entries collected: " + str(len(entries)))
         
-        if len(entries) >= math.factorial(16)/math.factorial(16-7):
-            print("breaking")
-            break    
-    
 
-    with open("database6_second.txt", "w") as f:
-        for entry in sorted(entries, key=lambda c: c[1]):
+        if len(entries) >= math.factorial(16)/math.factorial(16-6):
+            print("break")
+            break
+    
+    
+    entries=sorted(entries,key=lambda x:x[0])
+    entries=list(accumulate(entries))
+    with open("database6-10.txt", "w") as f:
+        for entry in sorted(entries,key=lambda x:x[1]):
             json.dump(entry, f)
             f.write("\n")
 
     elapsed_time = time.time() - start_time
-    print("First 6 database generated")
+    print("Second 6 database generated")
     print(f'elapsed time (in seconds): {elapsed_time}s')
 
 
-# generatePart3Database()
-generateFirstPart6Database()
-# generateSecondPart6Database()
+generate11_15Database()
+generate1_5Database()
+generate6_10Database()
