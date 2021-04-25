@@ -2,8 +2,6 @@ from Puzzle import FifteenPuzzle
 from search import *
 import time
 import math
-import json
-import ast
 
 N = 4
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
@@ -255,7 +253,7 @@ if __name__ == "__main__":
     lines3=line3dict
 
     puzzles=[]
-    file = open("generated15.txt")
+    file = open("tests/generated15.txt")
     Lines = file.readlines()
     for line in Lines:
         puzzles.append(eval(line.strip()))
@@ -303,7 +301,7 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start_time
         print(f'elapsed time (in seconds): {elapsed_time}s')
 
-total_time = time.time() - total_start
+    total_time = time.time() - total_start
     print("\nAll 5000 puzzles:")
     print(f'elapsed time (in seconds): {total_time}s')
 
