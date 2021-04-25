@@ -196,20 +196,24 @@ if __name__ == "__main__":
         puzzles.append(eval(line.strip()))
 
     total_start = time.time()
+    misplaced_time = 0
+    mhd_time = 0
+    inversion_time = 0
 
     for line in puzzles:
         puzzle = FifteenPuzzle(line)
         display(puzzle.initial)
         ##misplaced-tiles
-        # print("A* with misplaced-tiles heuristic:")
-        # start_time = time.time()
-        #
-        # sol = astar_search(puzzle, "", True).solution()
-        # print("Solution: ", sol)
-        # print("Solution length: ", len(sol))
-        #
-        # elapsed_time = time.time() - start_time
-        # print(f'elapsed time (in seconds): {elapsed_time}s')
+        print("A* with misplaced-tiles heuristic:")
+        start_time = time.time()
+
+        sol = astar_search(puzzle, "", True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
+
+        elapsed_time = time.time() - start_time
+        misplaced_time += elapsed_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
 
         ###manhattan
         print("\n\nA* with manhattan heuristic:")
@@ -220,6 +224,7 @@ if __name__ == "__main__":
         print("Solution length: ", len(sol))
 
         elapsed_time = time.time() - start_time
+        mhd_time += elapsed_time
         print(f'elapsed time (in seconds): {elapsed_time}s')
 
         ## inversion
@@ -231,6 +236,7 @@ if __name__ == "__main__":
         print("Solution length: ", len(sol))
 
         elapsed_time = time.time() - start_time
+        inversion_time += elapsed_time
         print(f'elapsed time (in seconds): {elapsed_time}s')
 
         ###Max-misplaced-manhattan
@@ -245,5 +251,14 @@ if __name__ == "__main__":
         # print(f'elapsed time (in seconds): {elapsed_time}s')
 
     total_time = time.time() - total_start
-    print("All puzzles:")
+    print("\nAll 5000 puzzles:")
     print(f'elapsed time (in seconds): {total_time}s')
+
+    print("\nAll puzzles w/ Misplaced Distance:")
+    print(f'elapsed time (in seconds): {misplaced_time}s')
+
+    print("\nAll puzzles w/ Manhattan Distance:")
+    print(f'elapsed time (in seconds): {mhd_time}s')
+
+    print("\nAll puzzles w/ Inversion Distance:")
+    print(f'elapsed time (in seconds): {inversion_time}s')

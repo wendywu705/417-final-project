@@ -75,7 +75,7 @@ def generate_puzzle(goal=None, num=10, moves=5):
 
 if __name__ == "__main__":
     start_time = time.time()
-    generate_puzzle(goal_state, 20, 25)
+    generate_puzzle(goal_state, 5000, 20)
     elapsed_time = time.time() - start_time
     print("done generating tests...")
     print(f'elapsed time (in seconds): {elapsed_time}s')
