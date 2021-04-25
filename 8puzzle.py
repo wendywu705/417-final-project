@@ -178,7 +178,7 @@ if __name__ == "__main__":
     # start_time = time.time()
 
     # create_8puzzle_walking_distance_table()       ## only need to run this for the first time to generate the lookup files
-    walking_distance_table = load_table_from_file('walking_distance_db_8puzzle.txt')
+    walking_distance_table = load_table_from_file('walking_dist/walking_distance_db_8puzzle.txt')
     print(f'The Walking Distance lookup table has {len(walking_distance_table)} entries.\n\n')
 
     # elapsed_time = time.time() - start_time

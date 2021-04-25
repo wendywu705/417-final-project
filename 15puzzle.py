@@ -1,6 +1,7 @@
 import csv
 
 from Puzzle import FifteenPuzzle
+from walking_dist.walking_distance import *
 from search import *
 import time
 import math

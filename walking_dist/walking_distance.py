@@ -119,9 +119,9 @@ def create_8puzzle_walking_distance_table():
         write_table_to_file(wd_filename, wd_table)
 
     # body of create_walking_distance_table()
-    row_file = 'row_distance_db_8puzzle.txt'
-    col_file = 'col_distance_db_8puzzle.txt'
-    wd_file = 'walking_distance_db_8puzzle.txt'
+    row_file = 'walking_dist/row_distance_db_8puzzle.txt'
+    col_file = 'walking_dist/col_distance_db_8puzzle.txt'
+    wd_file = 'walking_dist/walking_distance_db_8puzzle.txt'
     save_wd_row_col_table(row_file, col_file)
     save_wd_full_table(wd_file, row_file, col_file)
 
