@@ -3,6 +3,16 @@ from collections import deque
 
 from utils import *
 
+"""
+
+                                ---------------------------- 
+
+                        ---------------- Class Node ----------------
+
+                                ----------------------------
+
+"""
+
 
 class Node:
     """A node in a search tree. Contains a pointer to the parent (the node
@@ -73,7 +83,15 @@ class Node:
         return hash(self.state)
 
 
-# ______________________________________________________________________________
+"""
+
+                                ---------------------------- 
+
+                        ---------------- BFS Implementation ----------------
+
+                                ----------------------------
+
+"""
 
 # modified textbook code
 def breadth_first_tree_search(puzzle):
@@ -91,7 +109,15 @@ def breadth_first_tree_search(puzzle):
     return None
 
 
-#______________________________________________________________________________
+"""
+
+                                ---------------------------- 
+
+                        ---------------- A* Implementation ----------------
+
+                                ----------------------------
+
+"""
 
 
 def best_first_graph_search(problem, f, display=False):
@@ -133,7 +159,15 @@ def astar_search(problem, h=None, display=True):
     return best_first_graph_search(problem, lambda n: n.path_cost + h(n), display)
 
 
-# ______________________________________________________________________________
+"""
+
+                                ---------------------------- 
+
+                        ---------------- IDS Implementation ----------------
+
+                                ----------------------------
+
+"""
 
 
 def depth_limited_search(problem, limit=50):
@@ -166,8 +200,18 @@ def iterative_deepening_search(problem):
             return result
 
 
-# ______________________________________________________________________________
+"""
 
+                                ---------------------------- 
+
+                        ---------------- IDA* Implementation ----------------
+
+                                ----------------------------
+
+"""
+
+
+""" 
 
 def iterative_deepening_astar_search(problem):
     root = Node(problem.initial)
@@ -202,3 +246,4 @@ def depth_search_with_threshold(problem, threshold):
     # Body of depth_search_with_threshold:
     return recursive_dst(Node(problem.initial), problem, threshold)
 
+"""
