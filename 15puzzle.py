@@ -1,13 +1,9 @@
-import csv
-
-from Puzzle import FifteenPuzzle
 from walking_dist.walking_distance import *
 from search import *
 import time
 import math
 import csv
 import random
-
 
 goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
@@ -44,11 +40,6 @@ def display(state):
                                 ----------------------------
 
 """
-
-
-##taken from textbook code
-def misplaced(node):
-    return sum(s != g for (s, g) in zip(node.state, goal_state))
 
 
 def manhattan(node):
@@ -186,14 +177,6 @@ def walking_distance(node):
     '''
 
 
-## taken from textbook code
-def max_heuristic(node):
-    mis_score = misplaced(node)
-    man_score = manhattan(node)
-    # inv_score = inversion(node)
-    return max(mis_score, man_score)
-
-
 def fringePDB(node):
     pat1State = []
     pat2State = []
@@ -220,7 +203,7 @@ def fringePDB(node):
     pat2Cost = lines2[pat2State]
     pat3Cost = lines3[pat3State]
 
-    return max(pat1Cost, pat2Cost, pat3Cost)
+    return pat1Cost + pat2Cost + pat3Cost
 
 
 def append_row(file_name, new_row):
@@ -243,7 +226,6 @@ def make_new(file_name):
                                 ----------------------------
 
 """
-
 
 if __name__ == "__main__":
     print("\n\nCreating PDB lookup table...")

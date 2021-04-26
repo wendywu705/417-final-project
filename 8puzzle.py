@@ -42,10 +42,6 @@ def display(state):
 """
 
 
-# taken from textbook code
-def misplaced(node):
-    return sum(s != g for (s, g) in zip(node.state, goal_state))
-
 
 def manhattan(node):
     total_distance = 0
@@ -140,11 +136,6 @@ def walking_distance(node):
     return walking_distance_table[node.state]
 
 
-# taken from textbook code
-def max_heuristic(node):
-    mis_score = misplaced(node)
-    man_score = manhattan(node)
-    return max(mis_score, man_score)
 
 
 def fullPDB(node):
@@ -203,17 +194,14 @@ if __name__ == "__main__":
     for line in Lines:
         puzzles.append(eval(line.strip()))
     #
-    filenames = ['results8/misplaced.csv', 'results8/max.csv', 'results8/manhattan.csv',
-                 'results8/inversion.csv', 'results8/walking_dist.csv', 'results8/fringe_PDB.csv']
+    filenames = ['results8/manhattan.csv','results8/inversion.csv', 'results8/walking_dist.csv', 'results8/fringe_PDB.csv']
 
     for name in filenames:
         make_new(name)
 
     total_start = time.time()
-    misplaced_time = 0
     mhd_time = 0
     inversion_time = 0
-    max_time = 0
     wd_time = 0
     fringe_time = 0
 
@@ -225,20 +213,6 @@ if __name__ == "__main__":
             continue
         print("---------\nPuzzle:")
         display(puzzle.initial)
-
-        ##misplaced-tiles
-        print("\nA* with misplaced-tiles heuristic:")
-        start_time = time.time()
-
-        sol = astar_search(puzzle, "", True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
-
-        elapsed_time = time.time() - start_time
-        misplaced_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
-
-        append_row('results8/misplaced.csv', [line, sol, len(sol), elapsed_time])
 
         ###manhattan
         print("\n\nA* with manhattan heuristic:")
@@ -269,20 +243,6 @@ if __name__ == "__main__":
 
         append_row('results8/inversion.csv', [line, sol, len(sol), elapsed_time])
 
-        ###Max-misplaced-manhattan
-        print("\n\nA* with max-misplaced-manhattan heuristic:")
-        start_time = time.time()
-
-        sol = astar_search(puzzle, max_heuristic, True).solution()
-        print("Solution: ", sol)
-        print("Solution length: ", len(sol))
-
-        elapsed_time = time.time() - start_time
-        max_time += elapsed_time
-        print(f'elapsed time (in seconds): {elapsed_time}s')
-
-        append_row('results8/max.csv', [line, sol, len(sol), elapsed_time])
-
         ### walking distance
         print("\n\nA* with walking distance heuristic:")
         start_time = time.time()
@@ -297,26 +257,23 @@ if __name__ == "__main__":
 
         append_row('results8/walking_dist.csv', [line, sol, len(sol), elapsed_time])
 
-        # #Full PDB
-        # print("\n\nA* with full PDB heuristic:")
-        # start_time = time.time()
-        #
-        # sol = astar_search(puzzle, fullPDB, True).solution()
-        # print("Solution: ", sol)
-        # print("Solution length: ", len(sol))
-        #
-        # elapsed_time = time.time() - start_time
-        # fringe_time += elapsed_time
-        # print(f'elapsed time (in seconds): {elapsed_time}s')
-        #
-        # append_row('results8/fringe_PDB.csv', [line, sol, len(sol), elapsed_time])
+        #Full PDB
+        print("\n\nA* with full PDB heuristic:")
+        start_time = time.time()
+        
+        sol = astar_search(puzzle, fullPDB, True).solution()
+        print("Solution: ", sol)
+        print("Solution length: ", len(sol))
+        
+        elapsed_time = time.time() - start_time
+        fringe_time += elapsed_time
+        print(f'elapsed time (in seconds): {elapsed_time}s')
+        
+        append_row('results8/fringe_PDB.csv', [line, sol, len(sol), elapsed_time])
 
     total_time = time.time() - total_start
     print("\nAll puzzles:")
     print(f'elapsed time (in seconds): {total_time}s')
-
-    print("\nAll puzzles w/ Misplaced Distance:")
-    print(f'elapsed time (in seconds): {misplaced_time}s')
 
     print("\nAll puzzles w/ Manhattan Distance:")
     print(f'elapsed time (in seconds): {mhd_time}s')
